@@ -4,9 +4,7 @@ import MainNavigation from "@/components/NavigationMenu";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
 
 const DocsLayout = async ({ children }: { children: React.ReactNode }) => {
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/sidebar/docs`
-  );
+  const data = await fetch(`https://dev-docs.vercel.app/api/sidebar/docs`);
   const sidebarItems = await data.json();
 
   return (
