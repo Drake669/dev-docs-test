@@ -2,10 +2,10 @@ import React from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import MainNavigation from "@/components/NavigationMenu";
 import { AppSidebar } from "@/components/Sidebar/app-sidebar";
+import { getSideBarLinkItems } from "@/lib/resource-server-only.util";
 
 const DocsLayout = async ({ children }: { children: React.ReactNode }) => {
-  const data = await fetch(`https://dev-docs.vercel.app/api/sidebar/docs`);
-  const sidebarItems = await data.json();
+  const sidebarItems = getSideBarLinkItems("docs");
 
   return (
     <SidebarProvider>
