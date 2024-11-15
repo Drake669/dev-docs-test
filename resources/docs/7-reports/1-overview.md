@@ -124,7 +124,7 @@ Financial reports, from income statements to cash flow, with customizable data p
       Review all ledger entries for detailed financial tracking.
     </div>
   </a>
-  <a class="overview-card" href="/docs/8-reports/15-exchange-gains-losses">
+  <a class="overview-card" href="/docs/8-reports/15-exchange-gains-or-losses">
     <div class="overview-card-title">
       <span class="material-symbols-outlined"> trending_up </span>
       Exchange Gains or Losses

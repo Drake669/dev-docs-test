@@ -57,7 +57,7 @@ Where `<pagenumber>` is the page number of the quote list
         "business_address": "",
         "business_phone": "0265653314",
         "business_location": "",
-        "business_email": "ykatulie@gmail.com",
+        "business_email": "test@gmail.com",
         "created_at": "2020-07-25T14:32:11.000000Z",
         "updated_at": "2024-11-04T14:16:51.000000Z",
         "account_id": 18156,
@@ -209,22 +209,44 @@ To create a quote, you will need at least a customer or customer category select
 Make a `POST` request to `/newquote` endpoint to create a quote. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/newquote", FormData, {
+const response = await axios.post("<BASE_URL>/api/newquote", 
+{
+    "customer_id": 779,                    // The ID of the customer
+    "valid_until": "2024-11-13",           // The date until which the invoice is valid
+    "invoice_number": "INV-20241113-001",  // The invoice number (can be blank or generated)
+    "gross_amount": 4.19,                  // The amount before any discounts or taxes are applied
+    "discount_amount": 0.0,                // The discount applied to the total invoice
+    "amount_due": 4.19,                    // The total amount to be paid by the customer after discounts and taxes
+    "items": [                             // List of items included in the invoice
+      {
+        "uid": "_aiwptkge9",               // Unique identifier for the item
+        "id": 9543,                        // The ID of the item
+        "product_id": 9543,                // The product ID of the item
+        "description": "Item description", // The description of the item
+        "unit_price": 4.19,                // The price per unit of the item
+        "invoice_quantity": 1,             // The quantity of the item in the invoice
+        "tax_amount": 0,                   // The tax amount applied to the item
+        "invoice_amount": 4.19,            // The total amount for the item (unit price * quantity)
+        "quantity_error": false,           // Boolean indicating if there was an error with the quantity
+        "amount_due": 4.19,                // The amount due for the item after any discounts and taxes
+        "discount_amount": 0,              // The discount amount applied to the item
+        "discount_percent": 0.00           // The discount percentage applied to the item
+      }
+    ],
+    "note": "Thank you for your business", // A note attached to the invoice (optional)
+    "tag": "Standard Invoice",             // A tag for categorizing the invoice (optional)
+    "logo_position": "left",               // The position of the logo on the invoice
+    "color": "#FFAD45",                    // The color theme of the invoice
+    "fx_amount": 4.19,                     // The foreign exchange amount
+    "fx_rate": 1,                          // The foreign exchange rate
+    "base_currency": "GHS",                // The base currency of the invoice
+    "fx_currency": "GHS"                   // The foreign exchange currency
+},
+{
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
 });
 ```
@@ -257,32 +279,21 @@ There are two ways to share an quote
 To share a quote via email, make a `POST` request to the `/sendquote` endpoint. Here is a sample axios request:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/sendquote", FormData, {
+const response = await axios.post("<BASE_URL>/api/sendquote", 
+{
+      "quote_id": "QUOTE-001",              // Represents the id of the quote you wish to send
+      "send_tome": 1,                       // Boolean value representing whether to send a copy to your business email (can be 1 or 0)
+      "other_emails": ["client@example.com", "partner@example.com"], // Represents other emails you wish to send the quote to
+      "message": "Thank you for considering our services. Please find the attached quote for your review." // The message body of the email
+},
+{
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
 });
 ```
-
-The request payload, represented by the `FormData` above
-
-- `quote_id`: Represents the id of the quote you wish to send
-- `send_tome`: Boolean value representing whenther to send a copy to your business email(can be `1` or `0`)
-- `other_emails`(optional): Represents other emails you wish to send the quote to
-- `message`: The message body of the email
 
 #### Share via SMS and WhatsApp
 

@@ -107,31 +107,18 @@ To filter income statements by tags, select starting date, end date and tag(s) t
 const response = await axios.post(
   "https://web.builtaccounting.com/api/unrealisedgainsaccount?<type>&<tags>&from=<start_date>&to=<end_date>",
   {
-    headers: {
-      accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
-      authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
-    },
-  }
+       "type": "Revenue",             // Represents the type of income statement
+        "tags": ["Q4", "2024"],        // Represents the list of tags associated with the income statement
+        "start_date": "2024-10-01",    // Represents the start date of income statements
+        "end_date": "2024-10-31"       // Represents the end date of income statements
+},
+headers: {
+    accept: "application/json",
+    authorization: "Bearer <API-KEY>",
+    "content-type": "application/json"
+},
 );
 ```
 
 The `Response` object returned is the same as the one for getting all income statements
 
-The following are the list of all query parameters
-
-- `type` - the type of income statement
-- `tags` - the list of tags
-- `start_date` - Represents the start date of income statements
-- `end_date` - Represents the end date of income statements

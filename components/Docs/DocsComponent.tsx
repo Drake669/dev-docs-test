@@ -66,9 +66,9 @@ const DocsComponent = ({
           )}
         </div>
 
-        <aside className="hidden lg:flex flex-col items-start justify-start gap-6 w-full md:w-[20%] overflow-auto">
-          <h3 className="accent-a1 capitalize">On this page</h3>
-          <ol className="flex flex-col items-start justify-start gap-6 list-inside list-decimal">
+        <aside className="hidden lg:flex flex-col items-start justify-start gap-3 w-full md:w-[20%] overflow-auto">
+          <h3 className="accent-a1 capitalize pl-1">On this page</h3>
+          <ol className="flex flex-col items-start justify-start gap-1 list-inside list-decimal">
             {onThisPage?.length
               ? onThisPage.map(
                   (title) => title && <SectionLinks title={title} key={title} />

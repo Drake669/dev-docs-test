@@ -101,33 +101,19 @@ To filter suppliers, make a `POST` request to the `/supplier/transactions/id??st
 const response = await axios.post(
   "https://web.builtaccounting.com/api/supplier/transactions/id?start_date>&to=<end_date>4&references=<reference>"
   {
+      "start_date": "2024-11-07",    // Represents the start date of adding a new supplier
+      "end_date": "2024-11-30",      // Represents the end date of adding a new supplier
+      "reference": "SUP-001"         // Represents the reference for the new supplier
+    },
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json"
     },
-  }
 );
 ```
 
 The `Response` object returned is the same as the one for getting all suppliers
-
-The following are the list of all query parameters
-
-- `start_date` - Represents the start date of adding a new supplier
-- `end_date` - Represents the end date of adding a new supplier
-- `reference` - Represents the reference for the new supplier
 
 ### Get a Single Supplier
 
@@ -151,30 +137,23 @@ Make a `POST` request to `/createsupplier` endpoint to add a new supplier. Sampl
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/createsupplier",
-  FormData,
   {
-    supplier_name: Araphat Dimah
-    supplier_address: P.O. Box 8
-    supplier_phone: 0209714564
-    supplier_email: test@gmail.com
-    supplier_location: 
-    bank_code: undefined
-    account_number: 
-    account_name: 
-  }
+    "supplier_name": "ABC Supplies Ltd.",    // The name of the supplier
+    "supplier_address": "123 Business St, City, Country",  // The address of the supplier
+    "supplier_phone": "+1234567890",          // The phone number of the supplier
+    "supplier_email": "contact@abcsupplies.com",  // The email address of the supplier
+    "supplier_location": "Downtown, City",    // The location of the supplier
+    "bank_code": "XYZ123",                    // The bank code of the supplier
+    "account_number": "00123456789",          // The bank account number of the supplier
+    "account_name": "ABC Supplies Ltd. Account"  // The name of the account
+    },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json"
+    },
 );
 ```
-
-The following is a list of `FormData` values for adding a new supplier.
-
-- `supplier_name` - the name of the supplier
-- `supplier_address` - the address of the supplier
-- `supplier_phone` - the phone number of the supplier
-- `supplier_email` - the email address of the
-- `supplier_location` - the address of the supplier
-- `bank_code` - the bank code of the
-- `account_number` - the bank number of the
-- `account_name` - the name of the account
 
 Here is an example response received after successfully adding a new supplier:
 

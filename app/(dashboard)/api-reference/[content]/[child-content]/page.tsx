@@ -6,6 +6,7 @@ import {
   getSideBarLinkItems,
   readMDXFile,
 } from "@/lib/resource-server-only.util";
+import { getHeadings } from "@/lib/resource.util";
 import { ResolvingMetadata } from "next";
 
 const pagePath = "resources/api-reference";
@@ -37,6 +38,8 @@ const DocsPage = ({
     `${pagePath}/${params.content}`
   );
 
+  const onThisPage = getHeadings(data.content);
+
   const docSideBarLinks = getSideBarLinkItems("docs");
   const nextAndPreviousLinks = getNextAndPrevious(
     docSideBarLinks.navMain,
@@ -46,6 +49,7 @@ const DocsPage = ({
     <ReferenceComponet
       data={data}
       nextAndPreviousLinks={nextAndPreviousLinks}
+      onThisPage={onThisPage}
     />
   );
 };

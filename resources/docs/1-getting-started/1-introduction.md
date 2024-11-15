@@ -1,6 +1,6 @@
 #meta-data title: Introduction, description: Introduction to builts' documentation
 
-## Built Documentation
+## Built Developer Documentation
 
 Welcome to the Built Developer Documentation, where you’ll discover how to interact with the Built API.
 
@@ -47,16 +47,6 @@ Welcome to the Built Developer Documentation, where you’ll discover how to int
       offerings.
     </div>
   </a>
-  <a class="overview-card" href="/docs/6-stock-adjustments">
-    <div class="overview-card-title">
-      <span class="material-symbols-outlined"> add_shopping_cart </span>
-      Stock Adjustments
-    </div>
-    <div class="overview-card-content">
-      Adjust inventory records in real time with endpoints for updating stock
-      levels
-    </div>
-  </a>
   <a class="overview-card" href="/docs/7-accounting/1-overview">
     <div class="overview-card-title">
       <span class="material-symbols-outlined"> balance </span>
@@ -86,7 +76,7 @@ Welcome to the Built Developer Documentation, where you’ll discover how to int
       needs.
     </div>
   </a>
-   <a class="overview-card" href="/docs/9-settings/1-overview">
+   <a class="overview-card" href="/docs/1-getting-started/4-going-live">
     <div class="overview-card-title">
       <span class="material-symbols-outlined"> language </span>
       Going Live

@@ -1,16 +1,47 @@
 #meta-data title: Content, description: This is a description of the page
 
+## Testa
+
+<!-- Apply class of body-content for content that doesnt have an asscociated code block -->
+<span class="body-content">
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+</span>
+
+### Getting Started
 
 <div>
 <div>
 First, run the development server:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Headers
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+|                                                           |                                  |
+| :-------------------------------------------------------- | :------------------------------- |
+| Authorization <div class="table-description">string</div> | Set value to `Bearer SECRET_KEY` |
+| Invoices                                                  | `invoices`                       |
+| Invoice Payments                                          | `invoice_payments`               |
+| Invoice Online Payments                                   | `invoice_online_payments`        |
+| Sales                                                     | `sales`                          |
+| Deposits                                                  | `deposits`                       |
+
+<div class="optional-parameters">
+
+|                                                      |                           |
+| :--------------------------------------------------- | :------------------------ |
+| Business <div class="table-description">string</div> | `business` (string)       |
+| Invoices                                             | `invoices`                |
+| Invoice Payments                                     | `invoice_payments`        |
+| Invoice Online Payments                              | `invoice_online_payments` |
+| Sales                                                | `sales`                   |
+| Deposits                                             | `deposits`                |
+
+</div>
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
@@ -55,6 +86,9 @@ fetchData();
 <div>
 
 <div>
+<span class="warning-card">
+Random text
+</span>
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

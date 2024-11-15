@@ -6,6 +6,7 @@ import {
   getSideBarLinkItems,
   readMDXFile,
 } from "@/lib/resource-server-only.util";
+import { getHeadings } from "@/lib/resource.util";
 import { ResolvingMetadata } from "next";
 
 const pagePath = "resources/api-reference";
@@ -32,11 +33,13 @@ const DocsPage = ({ params }: { params: { content: string } }) => {
     referenceSideBarLinks.navMain,
     `/api-reference/${params.content}`
   );
+  const onThisPage = getHeadings(data.content);
 
   return (
     <ReferenceComponet
       data={data}
       nextAndPreviousLinks={nextAndPreviousLinks}
+      onThisPage={onThisPage}
     />
   );
 };

@@ -99,18 +99,8 @@ const response = axios.post(
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   }
 );

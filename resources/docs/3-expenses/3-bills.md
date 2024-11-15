@@ -290,23 +290,11 @@ const response = await axios.post(
     fx_amount: 10830.0, // Amount in foreign currency
     fx_currency: "GHS", // Foreign currency used for the purchase
   },
-  {
-    headers: {
-      accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
-      authorization: "Bearer <API-KEY>",
-      "content-type": "appication/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
-    },
-  }
+  headers: {
+    accept: "application/json",
+    authorization: "Bearer <API-KEY>",
+    "content-type": "appication/json",
+  },
 );
 ```
 
@@ -387,32 +375,24 @@ To manually add payment to a bill, make a `POST` request to the `/paybill` endpo
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/paybill",
-  FormData,
-  {
-    amount: 130
-    date: 2024-11-5
-    bill_id: 62907
-    payment_account: 18923
-    description: this is a test for bill payment
-    fx_rate: 1
-    fx_amount: 0
-    base_currency: GHS
-    fx_currency: GHS,
-  }
+   {
+    "amount": 500.00,                       // The amount you want to pay
+    "date": "2024-11-13",                   // The date for adding payment to bill
+    "bill_id": "BILL-7890",                 // The id of the bill
+    "payment_account": "PAY-456",           // The payment account associated with the bill
+    "description": "Payment for electricity bill", // The description of the payment
+    "fx_rate": 1.1,                         // The foreign exchange rate
+    "fx_amount": 550.00,                    // The foreign exchange amount
+    "base_currency": "GHS",                 // The currency of the business
+    "fx_currency": "USD"                    // The foreign exchange currency
+  },
+  headers: {
+    accept: "application/json",
+    authorization: "Bearer <API-KEY>",
+    "content-type": "application/json",
+  },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `amount`: The amount you want to pay
-- `date` - the date for adding payment to bill
-- `bill_id` - the id of the bill
-- `payment_account` - the payment account associated with the bill
-- `description` - the description of the payment
-- `fx_rate`: The foreign exchange rate
-- `fx_amount`: The foreign exchange amount
-- `base_currency`: The curreny of the business
-- `fx_currency`: The foreign exchange currency
 
 #### Pay via Built Wallet
 
@@ -421,32 +401,24 @@ To add payment to a bill via Built wallet, make a `POST` request to the `/resolv
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/resolveaccount",
-  FormData,
-  {
-    amount: 130
-    date: 2024-11-5
-    bill_id: 62907
-    payment_account: 18923
-    description: this is a test for bill payment
-    fx_rate: 1
-    fx_amount: 0
-    base_currency: GHS
-    fx_currency: GHS,
-  }
+   {
+    "amount": 750.00,                       // The amount you want to pay
+    "date": "2024-11-15",                   // The date for adding payment to bill
+    "bill_id": "BILL-1023",                 // The id of the bill
+    "payment_account": "PAY-654",           // The payment account associated with the bill
+    "description": "Payment for internet services", // The description of the payment
+    "fx_rate": 1.2,                         // The foreign exchange rate
+    "fx_amount": 900.00,                    // The foreign exchange amount
+    "base_currency": "GHS",                 // The currency of the business
+    "fx_currency": "USD"                    // The foreign exchange currency
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `amount`: The amount you want to pay
-- `date` - the date for adding payment to bill
-- `bill_id` - the id of the bill
-- `payment_account` - the payment account associated with the bill
-- `description` - the description of the payment
-- `fx_rate`: The foreign exchange rate
-- `fx_amount`: The foreign exchange amount
-- `base_currency`: The curreny of the business
-- `fx_currency`: The foreign exchange currency
 
 #### Pay with Built Overdraft
 
@@ -455,34 +427,25 @@ To add payment to a bill via Built overdraft, make a `POST` request to the `/ove
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/overdraft/request",
-  FormData,
-  {
-    bill_id: 61449
-    amount: 5.58
-    payment_date: 2024-11-5
-    repayment_period: 30
-    repayment_due_date: 2024-11-5
-    interest: 0.42
-    total_amount: 6
-    account_number: 0209714564
-    bank: VODAFONE
-    account_name: ARAPHAT DIMAH
-  }
+   {
+    "bill_id": "BILL-2345",               // The ID of the bill
+    "amount": 1200.00,                     // The amount you want to pay
+    "payment_date": "2024-11-20",          // The date for adding payment to bill
+    "repayment_period": "12 months",       // The period for payment
+    "repayment_due_date": "2025-11-20",   // The date due for the payment
+    "interest": 150.00,                    // The interest amount to be paid
+    "total_amount": 1350.00,               // The total amount to pay (amount + interest)
+    "account_number": "123456789",         // The number of the account
+    "bank": "XYZ Bank",                    // The bank associated with the account number
+    "account_name": "John Doe"             // The name associated with the account number
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `bill_id` - the id of the bill
-- `amount`: The amount you want to pay
-- `payment_date` - the date for adding payment to bill
-- `repayment_period` - the period for payment
-- `repayment_due_date` - the date due for the payment
-- `interest` - the interest amount to be paid
-- `total_amount` - the total amount to pay
-- `account_number` - the number of the account
-- `bank` - the bank associated with the account number
-- `account_name` - the name associated with the account number
 
 #### Pay via Card
 
@@ -491,34 +454,25 @@ To add payment to a bill via Card, make a `POST` request to the `/card/request` 
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/card/request",
-  FormData,
-  {
-    bill_id: 61449
-    amount: 5.58
-    payment_date: 2024-11-5
-    repayment_period: 30
-    repayment_due_date: 2024-11-5
-    interest: 0.42
-    total_amount: 6
-    account_number: 0209714564
-    bank: VODAFONE
-    account_name: ARAPHAT DIMAH
-  }
+   {
+    "bill_id": "BILL-3456",               // The ID of the bill
+    "amount": 1000.00,                     // The amount you want to pay
+    "payment_date": "2024-11-22",          // The date for adding payment to bill
+    "repayment_period": "6 months",        // The period for payment
+    "repayment_due_date": "2025-05-22",   // The date due for the payment
+    "interest": 100.00,                    // The interest amount to be paid
+    "total_amount": 1100.00,               // The total amount to pay (amount + interest)
+    "account_number": "987654321",         // The number of the account
+    "bank": "ABC Bank",                    // The bank associated with the account number
+    "account_name": "Jane Smith"           // The name associated with the account number
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json"
+    },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `bill_id` - the id of the bill
-- `amount`: The amount you want to pay
-- `payment_date` - the date for adding payment to bill
-- `repayment_period` - the period for payment
-- `repayment_due_date` - the date due for the payment
-- `interest` - the interest amount to be paid
-- `total_amount` - the total amount to pay
-- `account_number` - the number of the account
-- `bank` - the bank associated with the account number
-- `account_name` - the name associated with the account number
 
 #### Pay via Mobile Money
 
@@ -527,36 +481,26 @@ To add payment to a bill via Mobile money, make a `POST` request to the `/vendor
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/vendor/v2/instantpayment",
-  FormData,
-  {
-    payer_account_bank: VODAFONE
-    payer_account_number: 0209714564
-    account_bank: VODAFONE
-    account_number: 0209714564
-    description: Instant bill payment
-    amount: 0
-    method: momo
-    bill_id: 52978
-    payment_accountID: 18923
-    charge: 0
-    rate: 1
-  }
+   {
+    "payer_account_bank": "Bank of America",  // The payer's account bank
+    "payer_account_number": "1234567890",     // The payer's account number
+    "account_bank": "XYZ Bank",                // The payer account name
+    "account_number": "0987654321",            // The payer account number
+    "description": "Payment for invoice #1234", // The description for the payment request
+    "amount": 500.00,                          // The amount to pay
+    "method": "Bank Transfer",                 // The payment method
+    "bill_id": "BILL-1234",                    // The id of the bill
+    "payment_accountID": "PAY-001",            // The id of the payment request
+    "charge": 10.00,                           // The service charge
+    "rate": 1.05                               // The rate to charge
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json"
+    },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `payer_account_bank` - the payer account
-- `payer_account_number` - the payer account number
-- `account_bank` - the payer account name
-- `account_number` - the payer account number
-- `description` - the description for the payment request
-- `amount` - the amount to pay
-- `method` - the payment method
-- `bill_id` - the id of the bill
-- `payment_accountID` - the id of the payment request
-- `charge` - the service charge
-- `rate` - the rate to charge
 
 <div class="info-card"><span class="material-symbols-outlined">
 info
@@ -569,20 +513,18 @@ To add withholding to a bill, make a `POST` request to the `/savebillwithholding
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/savebillwithholding",
-  FormData,
-  {
-    amount: 0
-    date: 2024-11-06
-    bill_id: 52978
-  }
+   {
+    "amount": 200.00,          // The amount to be withheld
+    "date": "2024-11-25",      // The date for the withholding
+    "bill_id": "BILL-5678"     // The id of the bill
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json"
+    },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `amount` - the amount to be withheld
-- `date` - the date for the withholding
-- `bill_id` - the id of the bill
 
 ### Remove Withholding
 
@@ -591,20 +533,18 @@ To remove withholding to a bill, make a `POST` request to the `/removebillwithho
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/removebillwithholding",
-  FormData,
   {
-    amount: 0
-    date: 2024-11-06
-    bill_id: 52978
-  }
+    "amount": 200.00,          // The amount to be withheld
+    "date": "2024-11-25",      // The date for the withholding
+    "bill_id": "BILL-5678"     // The id of the bill
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json"
+    },
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `amount` - the amount to be withheld
-- `date` - the date for the withholding
-- `bill_id` - the id of the bill
 
 ### Printing a Bill
 

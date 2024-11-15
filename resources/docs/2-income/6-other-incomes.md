@@ -128,35 +128,24 @@ const response = await axios.get("/api/otherincomes");
 Make a `POST` request to `/otherincome` endpoint to create an other income. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/otherincome", FormData, {
+const response = await axios.post("<BASE_URL>/api/otherincome", 
+{
+    "income_accountID": "INC-001",        // The ID of the income account
+    "payment_accountID": "PAY-123",       // The ID of the payment account
+    "amount": 1500.00,                    // The amount received
+    "currency": "USD",                    // The currency
+    "reference": "TRANS-456789",          // The reference of the transaction
+    "description": "Payment for consulting services", // A description attached to the income
+    "tag": "Consulting"                   // A tag attached to the income
+},
+{
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
 });
 ```
-
-The request payload, represented by the `FormData` above
-
-- `income_accountID`: The ID of the income <a href="/docs/7-accounting/4-chart-of-accounts">account</a>
-- `payment_accountID`: The ID of the payment <a href="/docs/7-accounting/4-chart-of-accounts">account</a>
-- `amount` - The amount received
-- `currency` - The currency
-- `reference` - The reference of the transaction
-- `description` - A description attached to the income
-- `tag`- A <a href="/accounting/tags">tag</a> attached to the income
 
 Here is an example response received after successfully creating an income:
 

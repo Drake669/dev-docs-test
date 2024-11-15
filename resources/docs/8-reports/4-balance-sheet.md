@@ -99,30 +99,17 @@ To filter a balance sheet, select starting date, and end date then make a `POST`
 const response = await axios.post(
   "https://web.builtaccounting.com/api/unrealisedgainsaccount/filter/id?from=<start_date>&to=<end_date>",
   {
-    headers: {
-      accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
-      authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
-    },
-  }
+      "id": 67890,                   // Represents the id of the balance sheet
+      "start_date": "2024-11-01",     // Represents the start date of the balance sheet
+      "end_date": "2024-11-30"        // Represents the end date of the balance sheet
+  },
+  headers: {
+    accept: "application/json",
+    authorization: "Bearer <API-KEY>",
+    "content-type": "application/json"
+  },
 );
 ```
 
 The `Response` object returned is the same as the one for getting all balancce sheets
 
-The following are the list of all query parameters
-
-- `id` - the id of the balancce sheet
-- `start_date` - Represents the start date of the balancce sheet
-- `end_date` - Represents the end date of the balancce sheet

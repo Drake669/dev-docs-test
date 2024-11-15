@@ -71,7 +71,7 @@ To get your wallet information, make a `GET` request to the `/bw/wallet` endpoin
     "first_name": "Katulie",
     "last_name": "Katulie",
     "birth_date": "1992-05-31",
-    "phone_number": "0503712979",
+    "phone_number": "0536474574",
     "email": "",
     "id_type": "passport",
     "id_number": "0012585888",
@@ -89,7 +89,7 @@ To get your wallet information, make a `GET` request to the `/bw/wallet` endpoin
     "deleted_at": null,
     "created_at": "2021-08-12T19:50:12.000000Z",
     "updated_at": "2024-07-19T16:43:15.000000Z",
-    "account_number": "0503712979",
+    "account_number": "0536474574",
     "account_type": "mobilemoney",
     "code": "VODAFONE",
     "account_name": "YUSSIF DONGOBIE KATULIE",
@@ -131,18 +131,8 @@ const response = axios.post(
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   }
 );

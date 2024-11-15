@@ -55,7 +55,7 @@ Here is an example request
 ```js
 const YOUR_ACCESS_TOKEN = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token
 
-axios.get("https://fxweb.builtaccounting.com/api/invoices", {
+axios.get('/api/invoices', {
   headers: {
     Authorization: `Bearer ${YOUR_ACCESS_TOKEN}`,
     "Content-Type": "application/json",

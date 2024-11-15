@@ -3,6 +3,8 @@
 import { convertToAnchorLink } from "@/lib/resource.util";
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
+import { Button } from "./ui/button";
+import { Link } from "lucide-react";
 
 const SectionLinks = ({ title }: { title: string }) => {
   const [currentHash, setCurrentHash] = useState("");
@@ -33,9 +35,16 @@ const SectionLinks = ({ title }: { title: string }) => {
 
   return (
     <a href={convertToAnchorLink(title)} key={title}>
-      <li className={cn("accent-a2", isActive && "font-bold text-[#002451]")}>
+      <Button
+        variant={"ghost"}
+        className={cn(
+          isActive && "bg-secondary",
+          "w-full flex items-center gap-x-1 font-light text-xs"
+        )}
+      >
+        <Link className="w-2 h-2" />
         {title}
-      </li>
+      </Button>
     </a>
   );
 };

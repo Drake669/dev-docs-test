@@ -7,7 +7,7 @@ Manage product catalogs, set pricing, and track inventory across your offerings.
 ### Quick Links
 
 <div class="overview">
-  <a class="overview-card" href="/docs/5-products-and-services/2-products">
+  <a class="overview-card" href="/docs/5-products-and-services/2-products-and-services">
     <div class="overview-card-title">
       <span class="material-symbols-outlined"> receipt_long </span>
       Products
@@ -16,7 +16,7 @@ Manage product catalogs, set pricing, and track inventory across your offerings.
       Create, update, set pricing and track inventory
     </div>
   </a>
-  <a class="overview-card" href="/docs/5-products-and-services/3-categories">
+  <a class="overview-card" href="/docs/5-products-and-services/3-product-categories">
     <div class="overview-card-title">
       <span class="material-symbols-outlined"> sell </span>
       Categories

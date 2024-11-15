@@ -179,38 +179,40 @@ To create a quick, you will need at least a single line item to create the sale.
 Make a `POST` request to `/sale` endpoint to create a sale. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/v2/sale", FormData, {
+const response = await axios.post("<BASE_URL>/api/v2/sale", 
+{
+      "entry_date": "2024-11-12",           // When the sale happened
+      "gross_amount": 500.00,               // The amount before taxes are applied
+      "discount_amount": 50.00,             // The discount applied to the sale
+      "amount_due": 450.00,                 // The amount to be paid by the customer. Value after applying taxes and the discount
+      "tax_amount": 30.00,                  // The tax applied to the sale
+      "items": [                            // A list of items that were purchased during the sale
+        {
+          "item_id": "ITEM-001",
+          "item_name": "Laptop",
+          "quantity": 1,
+          "price": 500.00
+        }
+      ],
+      "note": "Customer preferred express shipping", // A note attached to the sale
+      "tag": "Electronics",                         // A tag attached to the sale
+      "balance/change": 0.00,                       // The balance left after the sale
+      "payments": [                                 // A list of payment accounts and the amount paid into each account
+        {
+          "account_id": "ACC-001",
+          "account_name": "Credit Card",
+          "amount": 450.00
+        }
+      ]
+},
+{
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
 });
 ```
-
-The request payload, represented by the `FormData` above
-
-- `entry_date` - When the sale happenend
-- `gross_amount` - The amount before taxes are applied
-- `discount_amount` - The discount applied to the sale
-- `amount_due` - The amount to be paid by the customer. Value after applying taxes and the discount
-- `tax_amount` - The tax applied to the sale
-- `items` - A list of <a href="/docs/5-products-and-services">items</a> that were purchased during the sale
-- `note` - A note attached to the sale
-- `tag`- A <a href="/accounting/tags">tag</a> attached to the sale
-- `balance/change` - The balance left after the sale
-- `payments` - A list of payment <a href="/docs/7-accounting/4-chart-of-accounts">accounts</a> and the `amount` paid into each account
 
 Here is an example response received after successfully creating a sale:
 
@@ -410,31 +412,18 @@ To share a quick sale via email, make a `POST` request to the `/sendreceipt/:id`
 ```js
 const response = await axios.post(
   "<BASE_URL>/api/sendreciept/243103",
-  FormData,
+  {
+    "email": "test@gmail.com" //The email address of the recipient
+  }
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json",
     },
   }
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `email` - The email address of the recipient
 
 ### Printing a quick sale
 

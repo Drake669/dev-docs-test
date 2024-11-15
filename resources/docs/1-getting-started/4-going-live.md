@@ -92,7 +92,7 @@ const axios = require('axios');
 
 const productionToken = 'YOUR_PRODUCTION_ACCESS_TOKEN';
 
-axios.get('https://web.builtaccounting.com/api/invoices', {
+axios.get('/api/invoices', {
   headers: {
     'Authorization': `Bearer ${productionToken}`,
     'Content-Type': 'application/json'

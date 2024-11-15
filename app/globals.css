@@ -257,31 +257,72 @@ body,
       @apply text-muted-foreground;
     }
   }
-  .info-card {
-    @apply p-3 rounded  flex gap-x-4  bg-sky-200 text-sky-500 mt-5 w-[93%];
-  }
-  .warning-card {
-    @apply p-3 rounded  flex gap-x-4  bg-amber-200 text-amber-500 mt-5;
-  }
-  .error-card {
-    @apply p-3 rounded  flex gap-x-4  bg-rose-200 text-rose-500 mt-5;
-  }
-  .success-card {
-    @apply p-3 rounded  flex gap-x-4  bg-emerald-200 text-emerald-500 mt-5;
-  }
+}
+.toggle-button {
+  @apply border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground p-3 rounded-lg text-sm flex items-center gap-x-2 w-fit;
+}
+.info-card {
+  @apply p-3 rounded  flex gap-x-4  bg-sky-200 text-sky-500 mt-5 w-[93%];
+}
+.warning-card {
+  @apply p-3 rounded  flex gap-x-4  bg-amber-200 text-amber-500 mt-5;
+}
+.error-card {
+  @apply p-3 rounded  flex gap-x-4  bg-rose-200 text-rose-500 mt-5;
+}
+.success-card {
+  @apply p-3 rounded  flex gap-x-4  bg-emerald-200 text-emerald-500 mt-5;
 }
 
 /* Apply flex layout to elements */
 .markdown-body-api-reference {
   @apply list-disc list-inside flex flex-col gap-y-6 w-full;
+  .body-content {
+    @apply md:w-[60%] w-full flex flex-col gap-y-3;
+  }
   div {
     @apply flex gap-x-10 w-full;
     div {
       @apply flex flex-col gap-y-5 w-full;
     }
   }
+
+  table td {
+    @apply px-4 py-8 border-none rounded-lg;
+    .table-description {
+      @apply text-sm font-light;
+    }
+  }
+  .hide {
+    display: none;
+  }
+  .optional-parameters {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height 1s ease, opacity 1s ease;
+  }
+
+  .optional-parameters.show {
+    height: auto;
+    opacity: 1;
+    transition: height 1s ease, opacity 1s ease;
+  }
+
+  table th {
+    @apply text-left font-semibold bg-white;
+  }
+
+  table tr:nth-child(odd) {
+    @apply rounded-lg py-5 bg-gray-50;
+  }
+
+  table tr:nth-child(even) {
+    @apply bg-white rounded-md;
+  }
+
   pre {
-    @apply w-[90%] max-w-full list-disc list-inside;
+    @apply w-[90%] max-w-full;
     code {
       @apply rounded-md;
     }

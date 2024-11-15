@@ -383,22 +383,19 @@ Make a `POST` request to `/savetaxpayment` endpoint to add a new sale tax paymen
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/savetaxpayment",
-  FormData,
   {
-    date: 2024-11-05
-    amount: 25
-    tax_accountID: 42
-    payment_accountID: 5
-  }
+    "amount": 500.00,                      // The amount to pay for the income tax
+    "date": "2024-12-10",                  // The date for adding the income tax
+    "tax_accountID": "TAX-123",            // The tax account id
+    "payment_accountID": "PAY-456"         // The payment account id
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
 );
 ```
-
-The following is a list of `FormData` values for adding a new sale tax payment.
-
-- `amount` - the amount to pay for the income tax
-- `date` - the date for adding the income tax
-- `tax_accountID` - the tax account id
-- `payment_accountID` - the payment account id
 
 Here is an example response received after successfully adding a sale tax payment:
 

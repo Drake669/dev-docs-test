@@ -178,35 +178,22 @@ Make a `POST` request to `/customer/:id/deposit` endpoint to create a deposit. S
 ```js
 const response = await axios.post(
   "<BASE_URL>/api/customer/779/deposit",
-  FormData,
+  {
+      "amount": 1000.00,                    // The amount deposited by the customer
+      "account_id": "ACC-123",              // The account the deposit was made into
+      "description": "Initial deposit for service subscription", // The description of the deposit
+      "date": "2024-11-11",                 // When the deposit was made
+      "type": "credit"                      // The type of the deposit (credit or debit)
+  },
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json",
     },
   }
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `amount` - The amount deposited by the customer
-- `account_id` - The <a href="/docs/7-accounting/4-chart-of-accounts">account</a> the deposit was made into
-- `description` - The description of the deposit
-- `date` - When the deposit was made
-- `type` - The type of the deposit(`credit` or `debit`)
 
 Here is an example response received after successfully creating a deposit:
 
@@ -245,19 +232,8 @@ const response = await axios.post(
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json",
     },
   }
 );

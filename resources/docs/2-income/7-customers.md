@@ -27,7 +27,7 @@ const response = await axios.get("/api/getclients");
     "business_address": "",
     "business_phone": "0265653314",
     "business_location": "",
-    "business_email": "ykatulie@gmail.com",
+    "business_email": "test@gmail.com",
     "created_at": "2020-07-25T14:32:11.000000Z",
     "updated_at": "2024-11-04T14:16:51.000000Z",
     "account_id": 18156,
@@ -53,7 +53,7 @@ const response = await axios.get("/api/getclients");
     "business_address": "Darkumah, Accra. Ghana",
     "business_phone": "0200000000",
     "business_location": "",
-    "business_email": "ykatulie@gmail.com",
+    "business_email": "test@gmail.com",
     "created_at": "2020-11-24T14:18:21.000000Z",
     "updated_at": "2023-12-20T12:09:28.000000Z",
     "account_id": 37926,
@@ -106,36 +106,25 @@ Query Params of the request
 Make a `POST` request to `/createclient` endpoint to create a customer. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL/api/createclient", FormData, {
+const response = await axios.post("<BASE_URL/api/createclient", 
+{
+    "business_name": "Tech Solutions Inc.",    // The customer's business name. You can use this to represent the customer's name
+    "business_address": "123 Tech Street, Silicon Valley, CA", // The customer's business address. You can use this to represent the customer's address
+    "business_phone": "+1-800-555-0199",       // The customer's business phone number. You can use this to represent the customer's phone number
+    "business_email": "contact@techsolutions.com", // The customer's business email. You can use this to represent the customer's email
+    "category_id": "CAT-456",                  // The category the customer belongs to
+    "first_name": "John",                      // (Optional) The first name of the contact person
+    "last_name": "Doe",                        // (Optional) The last name of the contact person
+    "phone_number": "+1-800-555-0100"          // (Optional) The phone number of the contact person
+},
+{
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
 });
 ```
-
-The request payload, represented by the `FormData` above
-
-- `business_name`: The customer's business name. You can use this to represent the customers name
-- `business_address`: The customer's business address. You can use this to represent the customers address
-- `business_phone`: The customer's business phone number. You can use this to represent the customers phone number
-- `business_email`: The customer's business email. You can use this to represent the customers email
-- `category_id`: The category the customer belongs to.
-- `first_name`(optional) - The first name of the contact person.
-- `last_name`(optional) - The last name of the contact person.
-- `phone_number`(optional) - The phone number of the contact person
 
 Here is an example response received after successfully creating a customer:
 
@@ -183,30 +172,18 @@ If you have a group of customers from a previous business application, you can e
 To import a customer, make a `POST` request to the `/importcustomers` endpoint. Sample reqquest using axios:
 
 ```js
-const response = await axios.post("<BASE_URL/api/importcustomers", FormData, {
+const response = await axios.post("<BASE_URL/api/importcustomers", 
+  {
+      "customers": "customers_list.xlsx",    // This represents the Excel sheet that contains the information of customers
+      "category_id": "CAT-123"               // This represents the category all the customers should be imported under
+  },
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
-});
+);
 ```
-
-The request payload, represented by the `FormData` above
-
-- `customers` - This respresents the excel sheet that contains the information of customers
-- `category_id` - This respresents the <a href="">category</a> all the customers should be imported under
 
 ### Exporting customers
 
@@ -263,27 +240,15 @@ const response = await axios.get("/api/client/categories");
 To create a customer category, make a `POST` request to the `/client/category` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL/api/client/category", FormData, {
+const response = await axios.post("<BASE_URL/api/client/category", 
+  {
+    "name": "Technology",                  // The name of the category
+    "description": "Products and services related to technology, including hardware and software."  // The description of the category
+  }
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
-    "content-type":
-      "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "content-type": "application/json",
   },
-});
+);
 ```
-
-The request payload, represented by the `FormData` above
-
-- `name` - The name of the category
-- `description` - The description of the category

@@ -152,33 +152,21 @@ To filter a aged receivables, select starting date, and end date then make a `PO
 const response = await axios.post(
   "https://web.builtaccounting.com/api/client/transactions/id?from=<start_date>&to=<end_date>",
   {
-    headers: {
-      accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
-      authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
-    },
-  }
+      "id": 67890,                // The id of the aged receivable
+      "start_date": "2024-11-01", // Represents the start date of the aged receivable
+      "end_date": "2024-11-30"    // Represents the end date of the aged receivable
+  },
+  headers: {
+    accept: "application/json",
+    authorization: "Bearer <API-KEY>",
+    "content-type": "application/json"
+  },
 );
 ```
 
 The `Response` object returned is the same as the one for getting all aged receivables
 
-The following are the list of all query parameters
 
-- `id` - the id of the aged receivable
-- `start_date` - Represents the start date of the aged receivable
-- `end_date` - Represents the end date of the aged receivable
 
 ### Sending an Aged Receivable
 
@@ -188,20 +176,18 @@ Make a `POST` request to `/client/transactions/send/id?from=<startdate>&to=<endd
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/client/transactions/send/id?from=<startdate>&to=<enddate>",
-  formData,
   {
-    send_tome: 0
-    other_emails[]: dimah.araphat3@gmail.com
-    message: this is a test for sending an aged receivable to customer email
-  }
+    "send_tome": "2024-11-07",                     // The send time of the aged receivable
+    "other_emails": ["example@example.com", "another@example.com"],  // The other email addresses to send the aged receivable to
+    "message": "This is the message to be sent with the aged receivable notification." // The message of the aged receivable to be sent to the email address
+  },
+   headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json"
+    },
 );
 ```
-
-The following is a list of `FormData` values for sending an aged receivable to customer
-
-- `send_tome` - the send tome of the aged receivable
-- `other_emails` - the other email addresses to send the aged receivable to
-- `message` - the message of the aged receivable to be sent to the email address
 
 Here is an example response received after successfully sending an aged receivable to customer:
 

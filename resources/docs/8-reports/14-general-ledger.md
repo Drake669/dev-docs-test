@@ -146,31 +146,18 @@ To filter general ledger select starting date, end date, tag(s) and account(s) t
 const response = await axios.post(
   "https://web.builtaccounting.com/api/ledger/filter?<tags>&<accounts>from=<start_date>&to=<end_date>",
   {
+      "tags": ["tag1", "tag2"],       // The list of tags to be filtered
+      "accounts": ["account1", "account2"],  // The list of accounts to be filtered
+      "from": "2024-11-01",           // Represents the start date of ledgers to be filtered
+      "to": "2024-11-30"              // Represents the end date of ledgers to be filtered
+    },
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json"
     },
-  }
 );
 ```
 
 The `Response` object returned is the same as the one for getting all general ledgers
 
-The following are the list of all query parameters
-
-- `tags` - the list of tags to be filtered                                   
-- `accounts` - the list of accounts to be filtered   
-- `from` - Represents the start date of ledgers to be filtered
-- `to` - Represents the end date of ledgers to be filtered

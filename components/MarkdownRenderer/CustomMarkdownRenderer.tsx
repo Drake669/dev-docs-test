@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 declare global {
   interface Window {
     copyCode: (button: HTMLButtonElement) => void;
+    toggleOptionalParameters: (button: HTMLButtonElement) => void;
   }
 }
 
@@ -21,9 +22,7 @@ const md = markdownit({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return (
-            `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">
-  content_copy
-  </span></button><span class="lang-span">${lang}</span></div>` +
+          `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button><span class="lang-span">${lang}</span></div>` +
           `<span class="code-block">${
             hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
           }</span>` +
@@ -33,14 +32,47 @@ const md = markdownit({
     }
 
     return (
-      `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">
-  content_copy
-  </span></button><span class="lang-span">plain text</span></div>` +
+      `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button><span class="lang-span">plain text</span></div>` +
       `<span class="code-block">${md.utils.escapeHtml(str)}</span>` +
       `</code></pre>`
     );
   },
 });
+
+md.renderer.rules.html_block = (tokens: any, idx: number) => {
+  let content = tokens[idx].content;
+
+  // Insert icons for different card classes
+  if (content.includes('class="info-card"')) {
+    content = content.replace(
+      '<span class="info-card">',
+      `<span class="info-card"><span class="material-symbols-outlined">info</span>`
+    );
+  } else if (content.includes('class="warning-card"')) {
+    content = content.replace(
+      '<span class="warning-card">',
+      `<span class="warning-card"><span class="material-symbols-outlined">warning</span>`
+    );
+  } else if (content.includes('class="success-card"')) {
+    content = content.replace(
+      '<span class="success-card">',
+      `<span class="success-card"><span class="material-symbols-outlined">verified</span>`
+    );
+  }
+
+  if (content.includes('class="optional-parameters"')) {
+    content = `
+    <button class="toggle-button" onclick="toggleOptionalParameters(this)">
+      <span class="material-symbols-outlined">expand_circle_right</span>
+      Show Optional Parameters
+    </button>
+      <div class="optional-parameters hide">
+        
+    `;
+  }
+
+  return content;
+};
 
 md.renderer.rules.heading_open = (tokens: any, idx: number) => {
   const token = tokens[idx];
@@ -69,6 +101,7 @@ const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
 
   useEffect(() => {
     window.copyCode = copyCode;
+    window.toggleOptionalParameters = toggleOptionalParameters;
   }, []);
 
   return (
@@ -85,7 +118,6 @@ const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
 export default CustomMarkdownRenderer;
 
 function copyCode(button: HTMLButtonElement) {
-  // Find the closest code block (inside the <span class="code-block">)
   const codeBlock = button
     .closest(".code-container")
     ?.querySelector(".code-block")?.textContent;
@@ -95,13 +127,41 @@ function copyCode(button: HTMLButtonElement) {
     navigator.clipboard
       .writeText(codeBlock)
       .then(() => {
-        // Update the button text to show that it has been copied
         buttonSpan.textContent = "check";
-        // Reset the button text after 2 seconds
         setTimeout(() => {
           buttonSpan.textContent = "content_copy";
         }, 2000);
       })
       .catch((err) => console.error("Error copying code: ", err));
+  }
+}
+function toggleOptionalParameters(button: HTMLButtonElement) {
+  const optionalParamsDiv = button.nextElementSibling as HTMLElement;
+
+  if (optionalParamsDiv) {
+    // If content is hidden, show it
+    if (optionalParamsDiv.classList.contains("hide")) {
+      optionalParamsDiv.classList.remove("hide");
+      optionalParamsDiv.classList.add("show");
+
+      // Get the actual height of the content and set it
+      const contentHeight = optionalParamsDiv.scrollHeight;
+      optionalParamsDiv.style.height = "0"; // reset height before transition
+      optionalParamsDiv.offsetHeight; // trigger reflow to apply height change
+      optionalParamsDiv.style.height = `${contentHeight}px`; // animate to the full height
+
+      button.childNodes[1].textContent = "expand_circle_down";
+      button.childNodes[2].textContent = "Hide Optional Parameters";
+    } else {
+      optionalParamsDiv.style.height = `${optionalParamsDiv.scrollHeight}px`;
+      optionalParamsDiv.offsetHeight;
+      optionalParamsDiv.style.height = "0";
+      button.childNodes[1].textContent = "expand_circle_right";
+      button.childNodes[2].textContent = "Show Optional Parameters";
+      setTimeout(() => {
+        optionalParamsDiv.classList.remove("show");
+        optionalParamsDiv.classList.add("hide");
+      }, 1000);
+    }
   }
 }

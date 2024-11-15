@@ -140,39 +140,24 @@ Make a `POST` request to `/recordexpense` endpoint to create an invoice. Sample 
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/expense/216686",
-  FormData,
   {
+    "amount": 250.00,                      // The amount to be recorded in the expense report
+    "expense_account": "EXP-001",           // The account to be recorded in the expense report
+    "payment_accountID": "PAY-987",        // The payment account ID to be recorded in the expense report
+    "date": "2024-11-12",                  // The date to be recorded in the expense report
+    "reference": "EXP-12345",              // The reference to be recorded in the expense report
+    "description": "Office supplies purchase", // The description to be recorded in the expense report
+    "tag": "Office",                       // The tag to be recorded in the expense report
+    "fx_currency": "USD",                  // The currency to be recorded in the expense report
+    "fx_rate": 1.2                         // The rate to be recorded in the expense report
+  },
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json",
     },
-  }
 );
 ```
-
-The following is a list of `FormData` values for recording an expense
-
-- `amount` - The amount to be recorded in the expense report
-- `expense_account` - The account to be recorded in the expense report
-- `payment_accountID` - The payment account ID to be recorded in the expense report
-- `date` - The date to be recorded in the expense report
-- `reference` - The reference to be recorded in the expense report
-- `description` - The description to be recorded in the expense report
-- `tag` - The tag to be recorded in the expense report
-- `fx_currency` - The currency to be recorded in the expense report
-- `fx_rate` - The rate to be recorded in the expense report
 
 Here is an example response received after successfully recording an expense:
 
@@ -247,34 +232,20 @@ To filter paid expenses, make a `POST` request to the `/filterexpenses` endpoint
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/filterexpenses?from=<start_date>&to=<end_date>4&references=<reference>",
-  {
+    {
+      "start_date": "2024-11-07",    // Represents the start date of recording the paid expense
+      "end_date": "2024-12-07",      // Represents the end date of recording the paid expense
+      "reference": "EXP-001",        // Represents the reference for the paid expense
+    },
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
-      "content-type":
-        "multipart/form-data; boundary=----WebKitFormBoundaryQpRjwZ644tDgqgnd",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "content-type": "application/json"
     },
-  }
 );
 ```
 
 The `Response` object returned is the same as the one for getting all paid expenses
-
-The following are the list of all query parameters
-
-- `start_date` - Represents the start date of recording the paid expense
-- `end_date` - Represents the end date of recording the paid expense
-- `reference` - Represents the reference for the paid expense
 
 ### Get a Single Paid Expense Item
 

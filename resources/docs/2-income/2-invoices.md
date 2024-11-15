@@ -79,9 +79,9 @@ Where `<pagenumber>` is the page number of the invoice list
         "phone_number": null,
         "business_name": "Katulie Yusif",
         "business_address": "Darkumah, Accra. Ghana",
-        "business_phone": "0503712979",
+        "business_phone": "0536474574",
         "business_location": null,
-        "business_email": "amloyal4life@gmail.com",
+        "business_email": "test@gmail.com",
         "created_at": "2020-03-10T12:24:45.000000Z",
         "updated_at": "2024-10-23T01:04:29.000000Z",
         "account_id": 463,
@@ -253,18 +253,8 @@ const response = await axios.post(
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   }
 );
@@ -316,18 +306,8 @@ const response = await axios.post(
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   }
 );
@@ -536,18 +516,8 @@ const response = await axios.post(
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   }
 );
@@ -558,36 +528,28 @@ const response = await axios.post(
 To add a payment to an invoice using customer <a href="/docs/income/deposits">deposits</a>, make a `POST` request to the `/paywith-deposit` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/paywith-deposit", FormData, {
-  headers: {
-    accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
+const response = await axios.post(
+  "<BASE_URL>/api/paywith-deposit",
+  {
+    invoice_id: "INV-001", // The id of the invoice
+    amount: 1500.75, // The amount you want to pay
+    send_receipt: true, // Boolean value indicating whether to send a receipt to the customer. Only customers with a valid email can receive the receipt.
+    date: "2024-11-12", // When the customer made the payment
+    fx_rate: 1.25, // The foreign exchange rate
+    fx_amount: 1875.94, // The foreign exchange amount
+    base_currency: "USD", // The currency of the business
+    fx_currency: "EUR", // The foreign exchange currency
+    reference: "PAY12345", // (Optional) The payment reference
   },
-});
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
+);
 ```
-
-The request payload, represented by the `FormData` above
-
-- `invoice_id`: The id of the invoice
-- `amount`: The amount you want to pay
-- `send_receipt`: Boolean value indicating whether to send a receipt to the customer. Only <a href="/docs/income/customers">customers</a> with a valid emails can receive the receipt.
-- `date`: When the customer made the payment
-- `fx_rate`: The foreign exchange rate
-- `fx_amount`: The foreign exchange amount
-- `base_currency`: The curreny of the business
-- `fx_currency`: The foreign exchange currency
-- `reference`(optional): The payment reference
 
 <div class="info-card"><span class="material-symbols-outlined">
 info
@@ -633,33 +595,21 @@ To send a manual reminder, make a `POST` request to the `/sendmanualinvoiceremin
 ```js
 const response = await axios.post(
   "<BASE_URL>/api/sendmanualinvoicereminder",
-  FormData,
+  {
+    "email": "customer@example.com",
+    "subject": "Payment Reminder: Invoice #12345",
+    "message": "Dear Customer, this is a friendly reminder that your invoice #12345 is due soon. Please make your payment at your earliest convenience. Thank you!",
+    "invoice_id": "12345"
+  }
   {
     headers: {
       accept: "application/json",
-      "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
-      "sec-ch-ua":
-        '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-      "sec-ch-ua-mobile": "?0",
-      "sec-ch-ua-platform": '"macOS"',
-      "sec-fetch-dest": "empty",
-      "sec-fetch-mode": "cors",
-      "sec-fetch-site": "cross-site",
-      Referer: "https://app.built.africa/",
-      "Referrer-Policy": "strict-origin-when-cross-origin",
     },
   }
 );
 ```
-
-The request payload, represented by the `FormData` above
-
-- `email`: The email address of the customer you want to send the reminder notification to
-- `subject`: The subject of the email reminder notification
-- `message`: The message of the reminder
-- `invoice_id`: The ID of the invoice you want to remind a customer about
 
 ### Sharing an Invoice
 
@@ -673,32 +623,22 @@ There are two ways to share an Invoice
 To share an Invoice via email, make a `POST` request to the `/sendinvoice` endpoint. Here is a sample axios request:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/sendinvoice", FormData, {
+const response = await axios.post("<BASE_URL>/api/sendinvoice",
+{
+  "invoice_id": "78901",
+  "send_tome": 1,
+  "other_emails": ["partner1@example.com", "partner2@example.com"],
+  "message": "Please find attached your invoice. Let us know if you have any questions.",
+  "send_attachments": true
+}
+{
   headers: {
     accept: "application/json",
-    "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,fr-FR;q=0.7,fr;q=0.6",
     authorization: "Bearer <API-KEY>",
     "content-type": "application/json",
-    "sec-ch-ua":
-      '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    Referer: "https://app.built.africa/",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
   },
 });
 ```
-
-The request payload, represented by the `FormData` above
-
-- `invoice_id`: Represents the invoice you wish to send
-- `send_tome`: Boolean value representing whenther to send a copy to your business email(can be `1` or `0`)
-- `other_emails`(optional): Represents other emails you wish to send the invoice to
-- `message`: The message body of the invoice
-- `send_attachments`: Boolean value representing whether to add attachments that were added to the invoice during creation. (can be `true` or `false`)
 
 #### Share via SMS and WhatsApp
 

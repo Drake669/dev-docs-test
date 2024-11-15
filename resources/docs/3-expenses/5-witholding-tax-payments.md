@@ -127,24 +127,20 @@ Make a `POST` request to `/withholding/payment` endpoint to add a new witholding
 ```js
 const response = await axios.post(
   "https://web.builtaccounting.com/api/withholding/payment",
-  FormData,
   {
-    amount: 20
-    date: 2024-11-5
-    description: this is test for withholding tax payment
-    withholding_account_id: 1763
-    payment_account_id: 5
-  }
+    "amount": 120.00,                        // The amount to pay for the withholding tax payment
+    "date": "2024-12-05",                    // The date for adding the withholding tax payment
+    "description": "Monthly withholding tax payment",  // The description for the withholding tax payment
+    "withholding_account_id": "WITHHOLD-001", // The withholding account id
+    "payment_account_id": "PAY-789"          // The payment account id
+  },
+  headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
 );
 ```
-
-The following is a list of `FormData` values for adding a new withholding tax payment.
-
-- `amount` - the amount to pay for the withholding tax payment
-- `date` - the date for adding the withholding tax payment
-- `description` - the description for the withholding tax payment
-- `withholding_account_id` - the withholding account id
-- `payment_account_id` - the payment account id
 
 Here is an example response received after successfully adding a withholding tax payment:
 

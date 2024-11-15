@@ -62,7 +62,7 @@ To get a list of recipients, make a `GET` request to the `/bw/recipients` endpoi
     "created_at": "2023-10-10T01:09:41.000000Z",
     "updated_at": "2023-10-10T01:09:41.000000Z",
     "name": "YUSSIF KATULIE",
-    "account_number": "0503712979",
+    "account_number": "0536474574",
     "bank_code": "VODAFONE",
     "type": "bank",
     "wallet_id": 1,
