@@ -6,10 +6,10 @@ Bills refer to documents or records that detail a transaction where one party re
 
 ### Get All Bills
 
-To get all bills, make a `GET` request to the `/getbills` endpoint. Sample request using axios:
+To get all bills, make a `GET` request to the `/bills` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/getbills?page=<pagenumber>");
+const response = await axios.get("/api/v3/bills");
 ```
 
 Where `<pagenumber>` is the page number of the bills list
@@ -194,30 +194,30 @@ Where `<pagenumber>` is the page number of the bills list
 
 ### Get Awaiting Bills
 
-To get awaiting bills, make a `GET` request to the `/getawaitingbills` endpoint. Sample request using axios:
+To get awaiting bills, make a `GET` request to the `/awaiting-bills` endpoint. Sample request using axios:
 
 ```js
-const response = axios.get("/api/v2/getawaitingbills?page=<pagenumber>");
+const response = axios.get("/api/v3/awaiting-bills");
 ```
 
 The `Response` object returned is the same as the one for getting all bills
 
 ### Get Overdue Bills
 
-To get overdue bills, make a `GET` request to the `/getoverduebills` endpoint. Sample request using axios:
+To get overdue bills, make a `GET` request to the `/overdue-bills` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get(`/api/v2/getoverduebills?page=1`);
+const response = await axios.get(`/api/v3/overdue-bills`);
 ```
 
 The `Response` object returned is the same as the one for getting all bills
 
 ### Get Paid bills
 
-To get paid bills, make a `GET` request to the `/getpaidbills` endpoint. Sample request using axios:
+To get paid bills, make a `GET` request to the `/paid-bills` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/getpaidbills?page=<pagenumber>");
+const response = await axios.get("/api/v3/paid-bills");
 ```
 
 The `Response` object returned is the same as the one for getting all bills
@@ -226,10 +226,10 @@ The `Response` object returned is the same as the one for getting all bills
 
 This returns an `Object` containing the summary information of the various bills lists(All bills, paid bills, awaiting bills, overdue bills)
 
-To get bills summaries, make a `GET` request to the `/billsummary` endpoint. Sample request using axios:
+To get bills summaries, make a `GET` request to the `/bills/:id` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/billsummary");
+const response = await axios.get("/api/v3/bills/:id");
 ```
 
 #### Sample Response object:
@@ -246,11 +246,11 @@ const response = await axios.get("/api/billsummary");
 ### Creating a Bill
 
 To create a bill, you will need to at least add or select a supplier and an item to create the bill.
-Make a `POST` request to `/createbill` endpoint to create a bill. Sample request using axios:
+Make a `POST` request to `/bills` endpoint to create a bill. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/createbill",
+  "/api/v3/bills",
   {
     supplier_id: 456, // The ID of the supplier
     purchase_date: "2024-01-15", // The date of purchase
@@ -290,11 +290,13 @@ const response = await axios.post(
     fx_amount: 10830.0, // Amount in foreign currency
     fx_currency: "GHS", // Foreign currency used for the purchase
   },
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "appication/json",
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 );
 ```
 
@@ -341,9 +343,7 @@ Here is an example response received after successfully creating a bill:
 Sample axios request to get a single bill item
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/supplier/banks/id"
-);
+const response = axios.get("/api/v3/bills/:id");
 ```
 
 - `:id` represents the id of the bill you want to get
@@ -352,7 +352,7 @@ The `Response` object received is same as the response after <a href="#creating-
 
 ### Update a Bill
 
-To update a bill, make a `POST` request to the `/ebill/journal/:id` endpoint.
+To update a bill, make a `POST` request to the `/api/v3/bills/:id` endpoint.
 
 - `:id` represents the id of the bill you want to edit
 
@@ -370,135 +370,145 @@ You can add payments to a bill in four ways.
 
 #### Add Manual Payment
 
-To manually add payment to a bill, make a `POST` request to the `/paybill` endpoint. Sample request using axios:
+To manually add payment to a bill, make a `POST` request to the `/bills/pay` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/paybill",
-   {
-    "amount": 500.00,                       // The amount you want to pay
-    "date": "2024-11-13",                   // The date for adding payment to bill
-    "bill_id": "BILL-7890",                 // The id of the bill
-    "payment_account": "PAY-456",           // The payment account associated with the bill
-    "description": "Payment for electricity bill", // The description of the payment
-    "fx_rate": 1.1,                         // The foreign exchange rate
-    "fx_amount": 550.00,                    // The foreign exchange amount
-    "base_currency": "GHS",                 // The currency of the business
-    "fx_currency": "USD"                    // The foreign exchange currency
+  "/api/v3/bills/pay",
+  {
+    amount: 500.0, // The amount you want to pay
+    date: "2024-11-13", // The date for adding payment to bill
+    bill_id: "BILL-7890", // The id of the bill
+    payment_account: "PAY-456", // The payment account associated with the bill
+    description: "Payment for electricity bill", // The description of the payment
+    fx_rate: 1.1, // The foreign exchange rate
+    fx_amount: 550.0, // The foreign exchange amount
+    base_currency: "GHS", // The currency of the business
+    fx_currency: "USD", // The foreign exchange currency
   },
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 );
 ```
 
 #### Pay via Built Wallet
 
-To add payment to a bill via Built wallet, make a `POST` request to the `/resolveaccount` endpoint. Sample request using axios:
+To add payment to a bill via Built wallet, make a `POST` request to the `/bills/pay` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/resolveaccount",
-   {
-    "amount": 750.00,                       // The amount you want to pay
-    "date": "2024-11-15",                   // The date for adding payment to bill
-    "bill_id": "BILL-1023",                 // The id of the bill
-    "payment_account": "PAY-654",           // The payment account associated with the bill
-    "description": "Payment for internet services", // The description of the payment
-    "fx_rate": 1.2,                         // The foreign exchange rate
-    "fx_amount": 900.00,                    // The foreign exchange amount
-    "base_currency": "GHS",                 // The currency of the business
-    "fx_currency": "USD"                    // The foreign exchange currency
+  "/api/v3/bills/pay",
+  {
+    amount: 750.0, // The amount you want to pay
+    date: "2024-11-15", // The date for adding payment to bill
+    bill_id: "BILL-1023", // The id of the bill
+    payment_account: "PAY-654", // The payment account associated with the bill
+    description: "Payment for internet services", // The description of the payment
+    fx_rate: 1.2, // The foreign exchange rate
+    fx_amount: 900.0, // The foreign exchange amount
+    base_currency: "GHS", // The currency of the business
+    fx_currency: "USD", // The foreign exchange currency
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
     },
+  }
 );
 ```
 
 #### Pay with Built Overdraft
 
-To add payment to a bill via Built overdraft, make a `POST` request to the `/overdraft/request` endpoint. Sample request using axios:
+To add payment to a bill via Built overdraft, make a `POST` request to the `/bills/pay` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/overdraft/request",
-   {
-    "bill_id": "BILL-2345",               // The ID of the bill
-    "amount": 1200.00,                     // The amount you want to pay
-    "payment_date": "2024-11-20",          // The date for adding payment to bill
-    "repayment_period": "12 months",       // The period for payment
-    "repayment_due_date": "2025-11-20",   // The date due for the payment
-    "interest": 150.00,                    // The interest amount to be paid
-    "total_amount": 1350.00,               // The total amount to pay (amount + interest)
-    "account_number": "123456789",         // The number of the account
-    "bank": "XYZ Bank",                    // The bank associated with the account number
-    "account_name": "John Doe"             // The name associated with the account number
+  "/api/v3/bills/pay",
+  {
+    bill_id: "BILL-2345", // The ID of the bill
+    amount: 1200.0, // The amount you want to pay
+    payment_date: "2024-11-20", // The date for adding payment to bill
+    repayment_period: "12 months", // The period for payment
+    repayment_due_date: "2025-11-20", // The date due for the payment
+    interest: 150.0, // The interest amount to be paid
+    total_amount: 1350.0, // The total amount to pay (amount + interest)
+    account_number: "123456789", // The number of the account
+    bank: "XYZ Bank", // The bank associated with the account number
+    account_name: "John Doe", // The name associated with the account number
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
     },
+  }
 );
 ```
 
 #### Pay via Card
 
-To add payment to a bill via Card, make a `POST` request to the `/card/request` endpoint. Sample request using axios:
+To add payment to a bill via Card, make a `POST` request to the `/bills/pay` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/card/request",
-   {
-    "bill_id": "BILL-3456",               // The ID of the bill
-    "amount": 1000.00,                     // The amount you want to pay
-    "payment_date": "2024-11-22",          // The date for adding payment to bill
-    "repayment_period": "6 months",        // The period for payment
-    "repayment_due_date": "2025-05-22",   // The date due for the payment
-    "interest": 100.00,                    // The interest amount to be paid
-    "total_amount": 1100.00,               // The total amount to pay (amount + interest)
-    "account_number": "987654321",         // The number of the account
-    "bank": "ABC Bank",                    // The bank associated with the account number
-    "account_name": "Jane Smith"           // The name associated with the account number
+  "/api/v3/bills/pay",
+  {
+    bill_id: "BILL-3456", // The ID of the bill
+    amount: 1000.0, // The amount you want to pay
+    payment_date: "2024-11-22", // The date for adding payment to bill
+    repayment_period: "6 months", // The period for payment
+    repayment_due_date: "2025-05-22", // The date due for the payment
+    interest: 100.0, // The interest amount to be paid
+    total_amount: 1100.0, // The total amount to pay (amount + interest)
+    account_number: "987654321", // The number of the account
+    bank: "ABC Bank", // The bank associated with the account number
+    account_name: "Jane Smith", // The name associated with the account number
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
 #### Pay via Mobile Money
 
-To add payment to a bill via Mobile money, make a `POST` request to the `/vendor/v2/instantpayment` endpoint. Sample request using axios:
+To add payment to a bill via Mobile money, make a `POST` request to the `/bills/pay` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/vendor/v2/instantpayment",
-   {
-    "payer_account_bank": "Bank of America",  // The payer's account bank
-    "payer_account_number": "1234567890",     // The payer's account number
-    "account_bank": "XYZ Bank",                // The payer account name
-    "account_number": "0987654321",            // The payer account number
-    "description": "Payment for invoice #1234", // The description for the payment request
-    "amount": 500.00,                          // The amount to pay
-    "method": "Bank Transfer",                 // The payment method
-    "bill_id": "BILL-1234",                    // The id of the bill
-    "payment_accountID": "PAY-001",            // The id of the payment request
-    "charge": 10.00,                           // The service charge
-    "rate": 1.05                               // The rate to charge
+  "/api/v3/bills/pay",
+  {
+    payer_account_bank: "Bank of America", // The payer's account bank
+    payer_account_number: "1234567890", // The payer's account number
+    account_bank: "XYZ Bank", // The payer account name
+    account_number: "0987654321", // The payer account number
+    description: "Payment for invoice #1234", // The description for the payment request
+    amount: 500.0, // The amount to pay
+    method: "Bank Transfer", // The payment method
+    bill_id: "BILL-1234", // The id of the bill
+    payment_accountID: "PAY-001", // The id of the payment request
+    charge: 10.0, // The service charge
+    rate: 1.05, // The rate to charge
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -508,54 +518,52 @@ info
 
 ### Add Withholding
 
-To add withholding to a bill, make a `POST` request to the `/savebillwithholding` endpoint. Sample request using axios:
+To add withholding to a bill, make a `POST` request to the `/bills/withholding` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/savebillwithholding",
-   {
-    "amount": 200.00,          // The amount to be withheld
-    "date": "2024-11-25",      // The date for the withholding
-    "bill_id": "BILL-5678"     // The id of the bill
+  "/api/v3/bills/withholding",
+  {
+    amount: 200.0, // The amount to be withheld
+    date: "2024-11-25", // The date for the withholding
+    bill_id: "BILL-5678", // The id of the bill
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
 ### Remove Withholding
 
-To remove withholding to a bill, make a `POST` request to the `/removebillwithholding` endpoint. Sample request using axios:
+To remove withholding to a bill, make a `POST` request to the `/removebills/withholding` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/removebillwithholding",
+  "/api/v3/bills/removebill/withholding",
   {
-    "amount": 200.00,          // The amount to be withheld
-    "date": "2024-11-25",      // The date for the withholding
-    "bill_id": "BILL-5678"     // The id of the bill
+    amount: 200.0, // The amount to be withheld
+    date: "2024-11-25", // The date for the withholding
+    bill_id: "BILL-5678", // The id of the bill
   },
-  headers: {
+  {
+    {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
+  }
 );
 ```
 
-### Printing a Bill
+### Delete a Bill
 
-You can print a bill using this visiting this route, `<BASE_URL>/printbill/:enc_id`
+To remove an income tax payment, make a `DELETE` request to the `/api/v3/bills/:id`
 
-- `BASE_URL`: This represents the base url of the built server
-- `end_id`: Represents the encryption id of the invoice. Can be found in the response object after <a href="#creating-a-bill">creating an bill</a>
-
-### Downloading a bill
-
-You can download a bill using this visiting this route, `<BASE_URL>/downloadPDF/:enc_id`
-
-- `BASE_URL`: This represents the base url of the built server
-- `end_id`: Represents the encryption id of the invoice. Can be found in the response object after <a href="#creating-a-bill">creating a bill</a>
+- `id` - This represents the ID of the bill you want to delete

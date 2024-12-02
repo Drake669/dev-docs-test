@@ -6,16 +6,18 @@ Income Statement is a financial document used in accounting that summarizes the 
 
 ### Get All Income Statements
 
-To get all income statements, make a `GET` request to the `/getincomestatement` endpoint. Sample request using axios:
+To get all income statements, make a `GET` request to the `/api/v3/reports/income-statement?statedate&enddate&tag` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("https://web.builtaccounting.com/api/getincomestatement/?<startdate>&<enddate>");
+const response = await axios.get(
+  "/api/v3/reports/income-statement?statedate&enddate&tag"
+);
 ```
-  
-Where `<startdate>` is the start date and `<enddate>` is the end date of the income statements list
+
+Where `<startdate>` is the start date, `<enddate>` is the end date and `<tag>` is the end date of the income statements list
 
 #### Sample Response object:
-    
+
 ```json
 {
     "expense": {
@@ -98,27 +100,3 @@ Where `<startdate>` is the start date and `<enddate>` is the end date of the inc
     }
 }
 ```
-
-### Filtering of Income Statements By Tags
-
-To filter income statements by tags, select starting date, end date and tag(s) then make a `POST` request to the `/unrealisedgainsaccount` endpoint. Sample request using axios:
-
-```js
-const response = await axios.post(
-  "https://web.builtaccounting.com/api/unrealisedgainsaccount?<type>&<tags>&from=<start_date>&to=<end_date>",
-  {
-       "type": "Revenue",             // Represents the type of income statement
-        "tags": ["Q4", "2024"],        // Represents the list of tags associated with the income statement
-        "start_date": "2024-10-01",    // Represents the start date of income statements
-        "end_date": "2024-10-31"       // Represents the end date of income statements
-    },
-    headers: {
-      accept: "application/json",
-      authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
-    },
-);
-```
-
-The `Response` object returned is the same as the one for getting all income statements
-

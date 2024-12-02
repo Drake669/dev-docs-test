@@ -6,7 +6,7 @@ This section provides detailed information about your business, including essent
 
 ### Getting Business Information
 
-To retrieve business information, send a `GET` request to the `/auth/user` endpoint. The response provides comprehensive details about the current user, including a field called `current_business`, which contains information about the business. Below is the structure of the `current_business` object.
+To retrieve business information, send a `GET` request to the `/api/v3/countries` endpoint. The response provides comprehensive details about the current user, including a field called `current_business`, which contains information about the business. Below is the structure of the `current_business` object.
 
 ```json
 {
@@ -179,7 +179,7 @@ To retrieve business information, send a `GET` request to the `/auth/user` endpo
     "created_at": null,
     "updated_at": null
   },
-  "enc_id": "eyJpdiI6IlBEdFhnYWZjdlNoNnNIdGlqdTRoQlE9PSIsInZhbHVlIjoiSTVtZDJLTkdrUkpBZmRtbVNDVU03QT09IiwibWFjIjoiNzQ2ODlmODg3ZjBkODNkMTkyYWE2YmVlNjVkNGU1YWMwOGNkMjljOTU2ZDljMmQ1ZWIwMWVlMWIwMzA0YmQ4NCIsInRhZyI6IiJ9",
+  "enc_id": "<ENC_ID",
   "subscription": {
     "id": 1,
     "user_id": 1,
@@ -715,11 +715,11 @@ To retrieve business information, send a `GET` request to the `/auth/user` endpo
 
 ### Updating Business Information
 
-To update your business information, make a `POST` request to the `/business/:id` where `id` is the id of the business. Here is a sample request using axios:
+To update your business information, make a `POST` request to the `/api/v3/update-business` where `business` is the id of the business. Here is a sample request using axios:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/business/1",
+  "/api/v3/update-business",
   {
     name: "Pied Pipper", // The name of the business
     address: "test-business@gmail.com", // The business address (could be email in this case)

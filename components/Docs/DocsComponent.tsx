@@ -28,19 +28,19 @@ const DocsComponent = ({
   return (
     <article className="w-full flex flex-col items-start justify-start gap-[60px] md:gap-16 h-full mt-8 px-8">
       <section className="flex flex-col md:flex-row md:gap-5 w-full h-full">
-        <div className="w-full md:w-[80%] flex flex-col gap-y-10 overflow-y-auto no-scrollbar h-[90vh] overflow-x-hidden break-words">
+        <div className="w-full md:w-[70%] flex flex-col gap-y-10  break-words">
           <CustomMarkdownRenderer folder="doc">
             {data.content}
           </CustomMarkdownRenderer>
           {nextAndPreviousLinks && (
-            <div className="flex items-center gap-x-2 w-full mb-20 justify-between">
+            <div className="flex items-center gap-x-2 w-full  justify-between pb-16">
               <Link
                 href={`${nextAndPreviousLinks.previous.url}`}
                 className="group flex items-center gap-x-2 rounded w-full"
               >
                 <Button
                   variant={"outline"}
-                  className="w-full relative h-full p-5"
+                  className="w-full relative h-full p-5 border border-accent"
                 >
                   <ChevronLeft className="w-6 h-6 font-light absolute left-4" />
                   <div className="capitalize group-hover:underline">
@@ -54,7 +54,7 @@ const DocsComponent = ({
               >
                 <Button
                   variant={"outline"}
-                  className="w-full relative h-full p-5"
+                  className="w-full relative h-full p-5 border border-accent"
                 >
                   <div className="capitalize group-hover:underline">
                     {nextAndPreviousLinks.next.title}
@@ -66,7 +66,7 @@ const DocsComponent = ({
           )}
         </div>
 
-        <aside className="hidden lg:flex flex-col items-start justify-start gap-3 w-full md:w-[20%] overflow-auto">
+        <div className="fixed top-36 right-4 hidden lg:flex flex-col gap-y-4">
           <h3 className="accent-a1 capitalize pl-1">On this page</h3>
           <ol className="flex flex-col items-start justify-start gap-1 list-inside list-decimal">
             {onThisPage?.length
@@ -75,7 +75,7 @@ const DocsComponent = ({
                 )
               : null}
           </ol>
-        </aside>
+        </div>
       </section>
     </article>
   );

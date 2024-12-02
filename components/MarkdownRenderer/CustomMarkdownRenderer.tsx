@@ -11,82 +11,9 @@ declare global {
   interface Window {
     copyCode: (button: HTMLButtonElement) => void;
     toggleOptionalParameters: (button: HTMLButtonElement) => void;
+    changeCodeLanguage: (select: HTMLSelectElement) => void;
   }
 }
-
-const md = markdownit({
-  html: true,
-  linkify: true,
-  typographer: true,
-  highlight: function (str: string, lang: string) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return (
-          `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button><span class="lang-span">${lang}</span></div>` +
-          `<span class="code-block">${
-            hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
-          }</span>` +
-          `</code></pre>`
-        );
-      } catch (__) {}
-    }
-
-    return (
-      `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button><span class="lang-span">plain text</span></div>` +
-      `<span class="code-block">${md.utils.escapeHtml(str)}</span>` +
-      `</code></pre>`
-    );
-  },
-});
-
-md.renderer.rules.html_block = (tokens: any, idx: number) => {
-  let content = tokens[idx].content;
-
-  // Insert icons for different card classes
-  if (content.includes('class="info-card"')) {
-    content = content.replace(
-      '<span class="info-card">',
-      `<span class="info-card"><span class="material-symbols-outlined">info</span>`
-    );
-  } else if (content.includes('class="warning-card"')) {
-    content = content.replace(
-      '<span class="warning-card">',
-      `<span class="warning-card"><span class="material-symbols-outlined">warning</span>`
-    );
-  } else if (content.includes('class="success-card"')) {
-    content = content.replace(
-      '<span class="success-card">',
-      `<span class="success-card"><span class="material-symbols-outlined">verified</span>`
-    );
-  }
-
-  if (content.includes('class="optional-parameters"')) {
-    content = `
-    <button class="toggle-button" onclick="toggleOptionalParameters(this)">
-      <span class="material-symbols-outlined">expand_circle_right</span>
-      Show Optional Parameters
-    </button>
-      <div class="optional-parameters hide">
-        
-    `;
-  }
-
-  return content;
-};
-
-md.renderer.rules.heading_open = (tokens: any, idx: number) => {
-  const token = tokens[idx];
-  const level = token.tag.slice(1);
-  const content = tokens[idx + 1].content;
-  const slug = slugify(content);
-
-  return `<h${level} id="${slug}">`;
-};
-
-md.renderer.rules.heading_close = (tokens: any, idx: number) => {
-  const level = tokens[idx].tag.slice(1);
-  return `</h${level}>`;
-};
 
 interface CustomMarkdownRendererProps {
   children: string;
@@ -97,10 +24,126 @@ const CustomMarkdownRenderer: React.FC<CustomMarkdownRendererProps> = ({
   children,
   folder,
 }) => {
+  const md = markdownit({
+    html: true,
+    linkify: true,
+    typographer: true,
+    highlight: function (str: string, lang: string) {
+      if (folder === "api-reference") {
+        // Render code blocks with dropdown for language selection
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            if (lang === "json") {
+              return (
+                `<pre data-lang="${lang}"><code class="hljs code-container"><div class="flex items-center justify-between gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><div class="responses-card">Responses</div><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button></div>` +
+                `<span class="code-block">${
+                  hljs.highlight(str, { language: lang, ignoreIllegals: true })
+                    .value
+                }</span>` +
+                `</code></pre>`
+              );
+            } else {
+              return (
+                `<pre class="code-block-container" style="display: ${
+                  lang === "js" ? "block" : "none"
+                }" data-lang="${lang}"><code class="hljs code-container"><div class="flex items-center justify-between gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><select class="lang-select" onchange="changeCodeLanguage(this)">
+  <option value="js" ${lang === "js" ? "selected" : ""}>Node.js</option>
+  <option value="go" ${lang === "go" ? "selected" : ""}>Go</option>
+  <option value="php" ${lang === "php" ? "selected" : ""}>PHP</option>
+  </select><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button></div>` +
+                `<span class="code-block">${
+                  hljs.highlight(str, { language: lang, ignoreIllegals: true })
+                    .value
+                }</span>` +
+                `</code></pre>`
+              );
+            }
+          } catch (__) {}
+        }
+
+        return (
+          `<pre><code class="hljs code-container"><div class="flex items-center justify-between gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;">
+<button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button></div>` +
+          `<span class="code-block">${md.utils.escapeHtml(str)}</span>` +
+          `</code></pre>`
+        );
+      } else {
+        // Original rendering for "doc" folder
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return (
+              `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button><span class="lang-span">${lang}</span></div>` +
+              `<span class="code-block">${
+                hljs.highlight(str, { language: lang, ignoreIllegals: true })
+                  .value
+              }</span>` +
+              `</code></pre>`
+            );
+          } catch (__) {}
+        }
+
+        return (
+          `<pre><code class="hljs code-container"><div class="flex items-center justify-end gap-x-2 text-xs my-2" style="flex-direction: row; column-gap: 1rem;"><button onclick="copyCode(this)" title="Copy code"><span class="material-symbols-outlined">content_copy</span></button><span class="lang-span">plain text</span></div>` +
+          `<span class="code-block">${md.utils.escapeHtml(str)}</span>` +
+          `</code></pre>`
+        );
+      }
+    },
+  });
+
+  md.renderer.rules.html_block = (tokens: any, idx: number) => {
+    let content = tokens[idx].content;
+
+    // Insert icons for different card classes
+    if (content.includes('class="info-card"')) {
+      content = content.replace(
+        '<span class="info-card">',
+        `<span class="info-card"><span class="material-symbols-outlined">info</span>`
+      );
+    } else if (content.includes('class="warning-card"')) {
+      content = content.replace(
+        '<span class="warning-card">',
+        `<span class="warning-card"><span class="material-symbols-outlined">warning</span>`
+      );
+    } else if (content.includes('class="success-card"')) {
+      content = content.replace(
+        '<span class="success-card">',
+        `<span class="success-card"><span class="material-symbols-outlined">verified</span>`
+      );
+    }
+
+    if (content.includes('class="optional-parameters"')) {
+      content = `
+      <button class="toggle-button" onclick="toggleOptionalParameters(this)">
+        <span class="material-symbols-outlined">expand_circle_right</span>
+        Show Optional Parameters
+      </button>
+        <div class="optional-parameters hide">
+          
+      `;
+    }
+
+    return content;
+  };
+
+  md.renderer.rules.heading_open = (tokens: any, idx: number) => {
+    const token = tokens[idx];
+    const level = token.tag.slice(1);
+    const content = tokens[idx + 1].content;
+    const slug = slugify(content);
+
+    return `<h${level} id="${slug}">`;
+  };
+
+  md.renderer.rules.heading_close = (tokens: any, idx: number) => {
+    const level = tokens[idx].tag.slice(1);
+    return `</h${level}>`;
+  };
   const htmlContent = md.render(children);
 
   useEffect(() => {
     window.copyCode = copyCode;
+    window.changeCodeLanguage = changeCodeLanguage;
     window.toggleOptionalParameters = toggleOptionalParameters;
   }, []);
 
@@ -164,4 +207,19 @@ function toggleOptionalParameters(button: HTMLButtonElement) {
       }, 1000);
     }
   }
+}
+
+function changeCodeLanguage(select: HTMLSelectElement) {
+  const codeBlocks = document?.querySelectorAll(".code-block-container");
+  const selectedLanguage = select.value;
+  codeBlocks?.forEach((block: any) => {
+    const language = block.getAttribute("data-lang");
+    if (language) {
+      if (language === selectedLanguage) {
+        block.style.display = "block";
+      } else {
+        block.style.display = "none";
+      }
+    }
+  });
 }

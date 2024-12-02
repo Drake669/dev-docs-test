@@ -6,10 +6,10 @@ Generate and manage quotes for potential sales and customer offers.
 
 ### Get All Quotes
 
-To get all quotes, make a `GET` request to the `/quote` endpoint. Sample request using axios:
+To get all quotes, make a `GET` request to the `/quotes` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/quote?page=<pagenumber>");
+const response = await axios.get("/api/v3/quotes");
 ```
 
 Where `<pagenumber>` is the page number of the quote list
@@ -206,49 +206,52 @@ Where `<pagenumber>` is the page number of the quote list
 ### Creating a Quote
 
 To create a quote, you will need at least a customer or customer category selected and a single line item to create the quote.
-Make a `POST` request to `/newquote` endpoint to create a quote. Sample request using axios:
+Make a `POST` request to `/quotes` endpoint to create a quote. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/newquote", 
-{
-    "customer_id": 779,                    // The ID of the customer
-    "valid_until": "2024-11-13",           // The date until which the invoice is valid
-    "invoice_number": "INV-20241113-001",  // The invoice number (can be blank or generated)
-    "gross_amount": 4.19,                  // The amount before any discounts or taxes are applied
-    "discount_amount": 0.0,                // The discount applied to the total invoice
-    "amount_due": 4.19,                    // The total amount to be paid by the customer after discounts and taxes
-    "items": [                             // List of items included in the invoice
+const response = await axios.post(
+  "/api/v3/quotes",
+  {
+    customer_id: 779, // The ID of the customer
+    valid_until: "2024-11-13", // The date until which the invoice is valid
+    invoice_number: "INV-20241113-001", // The invoice number (can be blank or generated)
+    gross_amount: 4.19, // The amount before any discounts or taxes are applied
+    discount_amount: 0.0, // The discount applied to the total invoice
+    amount_due: 4.19, // The total amount to be paid by the customer after discounts and taxes
+    items: [
+      // List of items included in the invoice
       {
-        "uid": "_aiwptkge9",               // Unique identifier for the item
-        "id": 9543,                        // The ID of the item
-        "product_id": 9543,                // The product ID of the item
-        "description": "Item description", // The description of the item
-        "unit_price": 4.19,                // The price per unit of the item
-        "invoice_quantity": 1,             // The quantity of the item in the invoice
-        "tax_amount": 0,                   // The tax amount applied to the item
-        "invoice_amount": 4.19,            // The total amount for the item (unit price * quantity)
-        "quantity_error": false,           // Boolean indicating if there was an error with the quantity
-        "amount_due": 4.19,                // The amount due for the item after any discounts and taxes
-        "discount_amount": 0,              // The discount amount applied to the item
-        "discount_percent": 0.00           // The discount percentage applied to the item
-      }
+        uid: "_aiwptkge9", // Unique identifier for the item
+        id: 9543, // The ID of the item
+        product_id: 9543, // The product ID of the item
+        description: "Item description", // The description of the item
+        unit_price: 4.19, // The price per unit of the item
+        invoice_quantity: 1, // The quantity of the item in the invoice
+        tax_amount: 0, // The tax amount applied to the item
+        invoice_amount: 4.19, // The total amount for the item (unit price * quantity)
+        quantity_error: false, // Boolean indicating if there was an error with the quantity
+        amount_due: 4.19, // The amount due for the item after any discounts and taxes
+        discount_amount: 0, // The discount amount applied to the item
+        discount_percent: 0.0, // The discount percentage applied to the item
+      },
     ],
-    "note": "Thank you for your business", // A note attached to the invoice (optional)
-    "tag": "Standard Invoice",             // A tag for categorizing the invoice (optional)
-    "logo_position": "left",               // The position of the logo on the invoice
-    "color": "#FFAD45",                    // The color theme of the invoice
-    "fx_amount": 4.19,                     // The foreign exchange amount
-    "fx_rate": 1,                          // The foreign exchange rate
-    "base_currency": "GHS",                // The base currency of the invoice
-    "fx_currency": "GHS"                   // The foreign exchange currency
-},
-{
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
+    note: "Thank you for your business", // A note attached to the invoice (optional)
+    tag: "Standard Invoice", // A tag for categorizing the invoice (optional)
+    logo_position: "left", // The position of the logo on the invoice
+    color: "#FFAD45", // The color theme of the invoice
+    fx_amount: 4.19, // The foreign exchange amount
+    fx_rate: 1, // The foreign exchange rate
+    base_currency: "GHS", // The base currency of the invoice
+    fx_currency: "GHS", // The foreign exchange currency
   },
-});
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
+);
 ```
 
 Visit <a href="/docs/2-income/2-invoices">creating an invoices</a> to see the shape of the response object
@@ -262,42 +265,52 @@ lightbulb
 Sample axios request to get a single quote item
 
 ```js
-const response = axios.get("<BASE_URL>/api/quote/12283");
+const response = axios.get("/api/v3/quotes/:id");
 ```
 
+Where `id` is the id of the quote item
 The `Response` object received is same as the response after <a href="#creating-a-quote">Creating a quote</a>
+
+### Update an Quote
+
+To update a quote, make a `POST` request to the `/api/v3/quotes/:id` endpoint.
+
+- `:id` represents the id of the quote you want to update
 
 ### Sharing a Quote
 
 There are two ways to share an quote
 
 - Via Email
-- Via SMS & WhatsApp(WhatsApp is currently unavailable at the moment)
+- Via SMS
 
 #### Sharing Via Email
 
-To share a quote via email, make a `POST` request to the `/sendquote` endpoint. Here is a sample axios request:
+To share a quote via email, make a `POST` request to the `/send-email` endpoint. Here is a sample axios request:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/sendquote", 
-{
-      "quote_id": "QUOTE-001",              // Represents the id of the quote you wish to send
-      "send_tome": 1,                       // Boolean value representing whether to send a copy to your business email (can be 1 or 0)
-      "other_emails": ["client@example.com", "partner@example.com"], // Represents other emails you wish to send the quote to
-      "message": "Thank you for considering our services. Please find the attached quote for your review." // The message body of the email
-},
-{
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
+const response = await axios.post(
+  "/api/v3/quotes/send-email",
+  {
+    quote_id: "QUOTE-001", // Represents the id of the quote you wish to send
+    send_tome: 1, // Boolean value representing whether to send a copy to your business email (can be 1 or 0)
+    other_emails: ["client@example.com", "partner@example.com"], // Represents other emails you wish to send the quote to
+    message:
+      "Thank you for considering our services. Please find the attached quote for your review.", // The message body of the email
   },
-});
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
+);
 ```
 
-#### Share via SMS and WhatsApp
+#### Share via SMS
 
-To share via SMS, make a post request to the `/send/quote/sms` endpoint
+To share via SMS, make a post request to the `/quotes/send-sms` endpoint
 
 Query Params of the request
 
@@ -312,22 +325,23 @@ Request payload
 
 ### Printing a quote
 
-You can print a quote by visiting this route, `<BASE_URL>/printquote/:enc_id`
+You can print a quote by visiting this route, `/quotes/:id/print`
 
-- `BASE_URL`: This represents the base url of the built server
-- `enc_id`: Represents the encryption id of the quote. Can be found in the response object after <a href="#creating-a-quote">creating a quote</a>
+- `url`: This represents the base url of the built server
+- `print`: Represents the encryption id of the quote. Can be found in the response object after <a href="#creating-a-quote">creating a quote</a>
 
 ### Downloading a quote
 
-You can download a quote by visiting this route, `<BASE_URL>/downloadquotePDF/:id`
+You can download a quote by visiting this route, `/quotes/:id/download-pdf`
 
-- `BASE_URL`: This represents the base url of the built server
+- `url`: This represents the base url of the built server
 - `:id`: Represents the id of the quote. Can be found in the response object after <a href="#creating-a-quote">creating a quote</a>
 
 ### Delete a quote
 
-To delete a quote, make a `DELETE` request to the `/deletequote:id` endpoint. Here is a sample request using axios
+To delete a quote, make a `DELETE` request to the `/quotes/:id` endpoint. Here is a sample request using axios
+Where `:id` is the id of the quote to delete
 
 ```js
-const response = await axios.delete("<BASE_URL>/api/deletequote/243103");
+const response = await axios.delete("/api/v3/quotes/:id");
 ```

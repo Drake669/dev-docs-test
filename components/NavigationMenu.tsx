@@ -1,18 +1,22 @@
 "use client";
 
-import { MoonIcon, SunIcon } from "lucide-react";
 import { SearchBar } from "./Searchbar";
 import { Button } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
-import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
+import { ThemeSwitcher } from "./ThemeSwitcher";
+import AlgoliaProvider from "./Algolia/provider";
 
 const Navbar = () => {
-  const [isLight, setIsLight] = useState(true);
+  //const [isLight, setIsLight] = useState(true);
   const pathName = usePathname();
+
+  const { resolvedTheme, setTheme } = useTheme();
 
   const activeClass = clsx(
     "data-[state=inactive]:bg-transparent data-[state=active]:bg-transparent data-[state=inactive]:shadow-none data-[state=active]:shadow-none",
@@ -29,8 +33,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="border-b shadow-sm flex bg-white items-center pl-8 p-4 h-full">
-      <SidebarTrigger />
+    <div
+      className={cn(
+        "shadow-sm flex items-center pl-8 p-4 h-full bg-opacity-30 backdrop-blur-lg backdrop-filter border-b"
+      )}
+    >
+      <SidebarTrigger className="flex md:hidden" />
       <div className="ml-auto flex gap-x-2">
         <Tabs defaultValue={defaultTabValue()}>
           <TabsList className="flex bg-transparent gap-x-4">
@@ -46,21 +54,18 @@ const Navbar = () => {
             </Link>
           </TabsList>
         </Tabs>
-        <SearchBar />
-        <Button
-          variant={"ghost"}
-          className="border p-3"
-          onClick={() => {
-            setIsLight((prev) => !prev);
-          }}
-        >
-          {isLight ? (
-            <SunIcon className="w-6 h-6" />
-          ) : (
-            <MoonIcon className="w-6 h-6" />
-          )}
-        </Button>
-        <Button variant={"outline"}>Sign Up</Button>
+        <AlgoliaProvider>
+          <SearchBar />
+        </AlgoliaProvider>
+        <ThemeSwitcher />
+        <Link href={"https://app.built.africa/"}>
+          <Button
+            variant={"outline"}
+            className="bg-accent text-accent-foreground"
+          >
+            Sign Up
+          </Button>
+        </Link>
       </div>
     </div>
   );

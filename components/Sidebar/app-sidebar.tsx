@@ -16,14 +16,14 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { SidebarLinks } from "@/lib/resource-types";
+import { cn } from "@/lib/utils";
 
 const SidebarMenuComponent = dynamic(() => import("./SidebarMenuComponent"));
+const SidebarLogo = dynamic(() => import("./SidebarLogo"), { ssr: false });
 
 interface AppSidebarProps extends ComponentProps<typeof Sidebar> {
   sidebarItems: SidebarLinks;
@@ -59,16 +59,10 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <a href="/">
-                <Image
-                  src={"/img/logo.png"}
-                  alt="built logo"
-                  width={200}
-                  height={200}
-                  className="size-full"
-                />
+                <SidebarLogo />
                 <div className="flex flex-col gap-0.5 leading-none">
                   <span className="font-semibold">Documentation</span>
-                  <span className="">v1.0.0</span>
+                  <span>v1.0.0</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -81,7 +75,6 @@ export function AppSidebar({ ...props }: AppSidebarProps) {
           <SidebarMenuComponent sidebarLinks={sidebarLinks} />
         </SidebarGroup>
       </SidebarContent>
-      <SidebarRail />
     </Sidebar>
   );
 }

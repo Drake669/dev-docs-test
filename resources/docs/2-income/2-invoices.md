@@ -6,13 +6,13 @@ An invoice is a document sent to a customer specifying the amount due for a prod
 
 ### Get All Invoices
 
-To get all invoices, make a `GET` request to the `/getinvoices` endpoint. Sample request using axios:
+To get all invoices, make a `GET` request to the `/invoices` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/getinvoices?page=<pagenumber>");
+const response = await axios.get("/api/v3/invoices");
 ```
 
-Where `<pagenumber>` is the page number of the invoice list
+Where `<invoices>` is the page number of the invoice list
 
 #### Sample Response object:
 
@@ -186,42 +186,42 @@ Where `<pagenumber>` is the page number of the invoice list
 
 ### Get Awaiting Invoices
 
-To get awaiting invoices, make a `GET` request to the `/getawaitinginvoices` endpoint. Sample request using axios:
+To get awaiting invoices, make a `GET` request to the `/awaiting-invoices` endpoint. Sample request using axios:
 
 ```js
-const response = axios.get("/api/v2/getawaitinginvoices?page=<pagenumber>");
+const response = axios.get("/api/v3/awaiting-invoices");
 ```
 
 The `Response` object returned is the same as the one for getting all invoices
 
 ### Get Overdue Invoices
 
-To get overdue invoices, make a `GET` request to the `/getoverdueinvoices` endpoint. Sample request using axios:
+To get overdue invoices, make a `GET` request to the `/overdue-invoices` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get(`/api/v2/getoverdueinvoices?page=1`);
+const response = await axios.get(`/api/v3/overdue-invoices`);
 ```
 
 The `Response` object returned is the same as the one for getting all invoices
 
 ### Get Paid Invoices
 
-To get paid invoices, make a `GET` request to the `/getpaidinvoices` endpoint. Sample request using axios:
+To get paid invoices, make a `GET` request to the `/paid-invoices` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/getpaidinvoices?page=<pagenumber>");
+const response = await axios.get("/api/v3/paid-invoices");
 ```
 
 The `Response` object returned is the same as the one for getting all invoices
 
 ### Get Invoice Summaries
 
-This returns an `Object` containing the summary information of the various invoice lists(All invoices, paid invoices, awaiting invoices, overdue invoices)
+This returns an `Object` containing the summary information of the various invoice lists(All invoices, paid invoices, invoices summaries, overdue invoices)
 
-To get invoices summaries, make a `GET` request to the `/invoicesummary` endpoint. Sample request using axios:
+To get invoices summaries, make a `GET` request to the `/invoices-summary` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/invoicesummary");
+const response = await axios.get("/api/v3/invoices/summary");
 ```
 
 #### Sample Response object:
@@ -237,11 +237,11 @@ const response = await axios.get("/api/invoicesummary");
 
 ### Filtering of Invoices
 
-To filter invoices, make a `POST` request to the `/flterinvoice` endpoint. Sample request using axios:
+To filter invoices, make a `POST` request to the `/flter-invoices` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/filterinvoice?page=1",
+  "/api/v3/filter-invoices",
   {
     startdate: "2024-01-01", // The start date for issuing the invoice
     enddate: "2024-12-31", // The end date for issuing the invoice
@@ -265,11 +265,11 @@ The `Response` object returned is the same as the one for getting all invoices
 ### Creating an Invoice
 
 To create an invoice, you will need at least a customer or customer category selected and a single line item to create the invoice.
-Make a `POST` request to `/newinvoice` endpoint to create an invoice. Sample request using axios:
+Make a `POST` request to `/invoice` endpoint to create an invoice. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/newinvoice",
+  "/api/v3/invoices",
   {
     style: "default", // The style applied to the invoice (options: "default" or "classic")
     customer_id: 123, // The ID of the customer for whom the invoice is created
@@ -471,16 +471,16 @@ Here is an example response received after successfully creating an invoice:
 Sample axios request to get a single invoice item
 
 ```js
-const response = axios.get("<BASE_URL>/api/invoice/358138");
+const response = axios.get("/api/v3/invoices/:invoice");
 ```
 
 The `Response` object received is same as the response after <a href="#creating-an-invoice">Creating an Invoice</a>
 
 ### Update an Invoice
 
-To update an invoice, make a `POST` request to the `/newinvoice/:id` endpoint.
+To update an invoice, make a `POST` request to the `/api/v3/invoices/:invoice` endpoint.
 
-- `:id` represents the id of the invoice you want to edit
+- `:invoice` represents the id of the invoice you want to update
 
 Check out <a href="#creating-an-invoice">Creating an Invoice</a> to see how to make the request and the shape of the `RESPONSE` object
 
@@ -493,11 +493,11 @@ You can add payments to an invoice in two ways.
 
 #### Direct Payment
 
-To add a direct payment to an invoice, make a `POST` request to the `/savepayment` endpoint. Sample request using axios:
+To add a direct payment to an invoice, make a `POST` request to the `/invoices/payments` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/savepayment",
+  "/api/v3/invoices/payments",
   {
     invoice_id: 123, // The ID of the invoice to which the payment applies
     amount: 100.0, // Amount the customer wants to pay
@@ -557,9 +557,9 @@ info
 
 ### Removing Payments from an Invoice
 
-To remove payments from an invoice, make a `DELETE` request to the `/removepayment/:id`
+To remove payments from an invoice, make a `DELETE` request to the `/api/v3/invoices/payments/:payment`
 
-- `id` - This represents the ID of the invoice you want to delete
+- `payment` - This represents the ID of the invoice you want to delete
 
 Here is an example response received after successfully removing payments from an invoice:
 
@@ -590,11 +590,11 @@ Here is an example response received after successfully removing payments from a
 
 ### Sending Manual Reminders
 
-To send a manual reminder, make a `POST` request to the `/sendmanualinvoicereminder` endpoint. Sample request using axios:
+To send a manual reminder, make a `POST` request to the `/send-manual-reminder` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/sendmanualinvoicereminder",
+  "/api/v3/invoices/send-manual-reminder",
   {
     "email": "customer@example.com",
     "subject": "Payment Reminder: Invoice #12345",
@@ -620,10 +620,10 @@ There are two ways to share an Invoice
 
 #### Sharing Via Email
 
-To share an Invoice via email, make a `POST` request to the `/sendinvoice` endpoint. Here is a sample axios request:
+To share an Invoice via email, make a `POST` request to the `/invoices/share` endpoint. Here is a sample axios request:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/sendinvoice",
+const response = await axios.post("/api/v3/invoices/share",
 {
   "invoice_id": "78901",
   "send_tome": 1,
@@ -642,12 +642,11 @@ const response = await axios.post("<BASE_URL>/api/sendinvoice",
 
 #### Share via SMS and WhatsApp
 
-To share via SMS, make a post request to the `/send/invoice/sms` endpoint
+To share via SMS, make a post request to the `/api/v3/invoices/share` endpoint
 
 Query Params of the request
 
-- `wb`: Boolean value representing whether to send invoice to whatsapp
-- `sms`: Boolean value representing whether to send the invoice via SMS
+- `share`: Boolean value representing whether to send the invoice via SMS or WhatsApp
 
 Request payload
 
@@ -656,14 +655,12 @@ Request payload
 
 ### Printing an invoice
 
-You can print an invoice by visiting this route, `<BASE_URL>/printinvoice/:enc_id`
+You can print an invoice by visiting this route, `/invoices/:invoice/print`
 
-- `BASE_URL`: This represents the base url of the built server
-- `enc_id`: Represents the encryption id of the invoice. Can be found in the response object after <a href="#creating-an-invoice">creating an invoice</a>
+- `invoice`: This represents the invoice to print
 
 ### Downloading an invoice
 
-You can download an invoice by visiting this route, `<BASE_URL>/downloadPDF/:enc_id`
+You can download an invoice by visiting this route, `/invoices/:invoice/download`
 
-- `BASE_URL`: This represents the base url of the built server
-- `enc_id`: Represents the encryption id of the invoice. Can be found in the response object after <a href="#creating-an-invoice">creating an invoice</a>
+- `download`: This represents the invoice to download

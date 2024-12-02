@@ -1,20 +1,23 @@
 #meta-data title: Expense by Suppliers, description: A list of all your suppliers and the total amount of your transactions with them.
+
 ## Expense by Suppliers
 
 Expense by Suppliers is a financial report that outlines the total expenses a business has incurred with individual suppliers over a specified period.
 
 ### Get All Expense by Suppliers
 
-To get all Expense by Suppliers, make a `GET` request to the `/analytics/suppliers/<startdate>/<enddate>` endpoint. Sample request using axios:
+To get all Expense by Suppliers, make a `GET` request to the `/api/v3/reports/suppliers/:from/:to` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("https://web.builtaccounting.com/api/analytics/suppliers/<startdate>/<enddate>");
+const response = await axios.get("/api/v3/reports/suppliers/:from/:to");
 ```
-  
-Where `<startdate>` is the start date and `<enddate>` is the end date of the expense by suppliers list
+
+Where `<from>` is the start date and `<to>` is the end date of the expense by suppliers list
 
 #### Sample Response object:
-    
+
+
+
 ```json
 {
     {
@@ -83,54 +86,57 @@ Where `<startdate>` is the start date and `<enddate>` is the end date of the exp
 Sample axios request to get a single expense by a supplier
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/supplier/id"
-);
+const response = axios.get("/api/v3/reports/suppliers/:id?from/:to");
 ```
 
 - `<id>` is the id of the expense by the supplier
+- `from` is the starting date of the expense
+- `to` is the ending date of the expense
 
 ### Filtering of Expense by Suppliers
 
-To filter a expense by suppliers, make a `POST` request to the `/supplier/transactions/id?from=<start_date>&to=<end_date>` endpoint. Sample request using axios:
+To filter a expense by suppliers, make a `POST` request to the `/api/v3/reports/suppliers/id?:from/:to` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/supplier/transactions/id?from=<start_date>&to=<end_date>",
+  "/api/v3/reports/suppliers/id?:from/:to",
   {
-      "id": 12345,                // The id of the expense by a supplier
-      "start_date": "2024-11-01", // Represents the start date of the expense by a supplier
-      "end_date": "2024-11-30"    // Represents the end date of the expense by a supplier
+    id: 12345, // The id of the expense by a supplier
+    from: "2024-11-01", // Represents the start date of the expense by a supplier
+    to: "2024-11-30", // Represents the end date of the expense by a supplier
   },
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json"
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 );
 ```
 
 The `Response` object returned is the same as the one for getting all expenses by suppliers
 
-
 ### Sending an Expense to Supplier
 
 To send an expense to supplier, you will need to draft message, and enter supplier's email address to send an expense to the supplier.
-Make a `POST` request to `/supplier/transactions/send/id?from=<startdate>&to=<enddate>` endpoint to send an expense to supplier. Sample request using axios:
+Make a `POST` request to `/api/v3/reports/suppliers/id?:from/:to/send` endpoint to send an expense to supplier. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/supplier/transactions/send/id?from=<startdate>&to=<enddate>",
+  "/api/v3/reports/suppliers/id?:from/:to/send",
   {
-    "send_tome": "2024-11-07",                     // The send time of the expense
-    "other_emails": ["example@example.com", "another@example.com"],  // The other email addresses to send the expense to
-    "message": "This is the message to be sent with the expense notification." // The message of the expense to be sent to the email address
+    send_tome: "2024-11-07", // The send time of the expense
+    other_emails: ["example@example.com", "another@example.com"], // The other email addresses to send the expense to
+    message: "This is the message to be sent with the expense notification.", // The message of the expense to be sent to the email address
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

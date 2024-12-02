@@ -4,17 +4,15 @@
 
 Sales Tax Payments refer to the payments a business makes to government tax authorities for the sales tax it has collected from customers on behalf of the state, county, or city.
 
-
 ### Get All Sales Tax Payments
 
-To get all Sales Tax Payments, make a `GET` request to the `/gettaxpayments` endpoint. Sample request using axios:
+To get all Sales Tax Payments, make a `GET` request to the `/sales/tax` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/gettaxpayments?page=<pagenumber>");
+const response = await axios.get("/api/v3/sales-tax");
 ```
 
 Where `<pagenumber>` is the page number of the sales tax payments list
-
 
 #### Sample Response object:
 
@@ -378,22 +376,24 @@ The `Response` object received is same as the response after <a href="#creating-
 ### Creating a Sale Tax Payment
 
 To create a sale tax payment, you will need to enter an amount, select a tax and payment account to add a new sale tax payment.
-Make a `POST` request to `/savetaxpayment` endpoint to add a new sale tax payment. Sample request using axios:
+Make a `POST` request to `/sales/tax` endpoint to add a new sale tax payment. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/savetaxpayment",
+  "/api/v3/sales-tax",
   {
-    "amount": 500.00,                      // The amount to pay for the income tax
-    "date": "2024-12-10",                  // The date for adding the income tax
-    "tax_accountID": "TAX-123",            // The tax account id
-    "payment_accountID": "PAY-456"         // The payment account id
+    amount: 500.0, // The amount to pay for the income tax
+    date: "2024-12-10", // The date for adding the income tax
+    tax_accountID: "TAX-123", // The tax account id
+    payment_accountID: "PAY-456", // The payment account id
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -417,23 +417,23 @@ Here is an example response received after successfully adding a sale tax paymen
 
 ### Removing a Sale Tax Payment
 
-To remove a sale tax payment, make a `DELETE` request to the `/deletetaxpayment/:id`
+To remove a sale tax payment, make a `DELETE` request to the `/sales-tax/:id`
 
 - `id` - This represents the ID of the sale tax payment you want to delete
 
 Here is an example response received after successfully removing a sale tax payment:
 
 ```json
-  {
-    "id": 1798,
-    "user_id": 1,
-    "business_id": 1,
-    "amount": 25,
-    "date": "2024-11-05",
-    "tax_accountID": 42,
-    "payment_accountID": 5,
-    "created_at": "2024-11-05T15:21:11.000000Z",
-    "updated_at": "2024-11-05T15:31:23.000000Z",
-    "deleted_at": "2024-11-05T15:31:23.000000Z"
+{
+  "id": 1798,
+  "user_id": 1,
+  "business_id": 1,
+  "amount": 25,
+  "date": "2024-11-05",
+  "tax_accountID": 42,
+  "payment_accountID": 5,
+  "created_at": "2024-11-05T15:21:11.000000Z",
+  "updated_at": "2024-11-05T15:31:23.000000Z",
+  "deleted_at": "2024-11-05T15:31:23.000000Z"
 }
 ```

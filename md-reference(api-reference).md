@@ -15,8 +15,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### Getting Started
 
-<div>
-<div>
+<div class="api-content">
+<div class="table-content">
 First, run the development server:
 
 #### Headers
@@ -30,9 +30,8 @@ First, run the development server:
 | Sales                                                     | `sales`                          |
 | Deposits                                                  | `deposits`                       |
 
-<div>
- Optional parameters
-</div>
+<div class="optional-parameters">
+
 |                                                      |                           |
 | :--------------------------------------------------- | :------------------------ |
 | Business <div class="table-description">string</div> | `business` (string)       |
@@ -42,14 +41,12 @@ First, run the development server:
 | Sales                                                | `sales`                   |
 | Deposits                                             | `deposits`                |
 
-<span class="warning-card">
-Random text
-</span>
+</div>
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 </div>
-<div>
+<div class="code-content">
 
 ```bash
 npm run dev
@@ -86,9 +83,12 @@ fetchData();
 
 ## Test Here
 
-<div>
+<div class="api-content">
 
-<div>
+<div class="table-content">
+<span class="info-card">
+Random text
+</span>
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
@@ -97,7 +97,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 </div>
 
-<div>
+<div class="code-content">
 
 ```js
 const axios = require("axios");
@@ -124,8 +124,8 @@ fetchData();
 
 ## Learn More
 
-<div>
-<div>
+<div class="api-content">
+<div class="table-content">
 To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -147,7 +147,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 </div>
 
-<div>
+<div class="code-content">
 
 ```js
 const axios = require("axios");

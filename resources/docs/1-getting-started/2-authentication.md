@@ -56,10 +56,13 @@ Here is an example request
 const YOUR_ACCESS_TOKEN = "YOUR_ACCESS_TOKEN"; // Replace with your actual access token
 
 axios.get('/api/invoices', {
-  headers: {
-    Authorization: `Bearer ${YOUR_ACCESS_TOKEN}`,
-    "Content-Type": "application/json",
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 });
 ```
 

@@ -93,9 +93,12 @@ const axios = require('axios');
 const productionToken = 'YOUR_PRODUCTION_ACCESS_TOKEN';
 
 axios.get('/api/invoices', {
-  headers: {
-    'Authorization': `Bearer ${productionToken}`,
-    'Content-Type': 'application/json'
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
   }
 });
 ```

@@ -40,18 +40,7 @@ const DocsPage = ({
 
   const onThisPage = getHeadings(data.content);
 
-  const docSideBarLinks = getSideBarLinkItems("docs");
-  const nextAndPreviousLinks = getNextAndPrevious(
-    docSideBarLinks.navMain,
-    `/api-reference/${params.content}/${params["child-content"]}`
-  );
-  return (
-    <ReferenceComponet
-      data={data}
-      nextAndPreviousLinks={nextAndPreviousLinks}
-      onThisPage={onThisPage}
-    />
-  );
+  return <ReferenceComponet data={data} onThisPage={onThisPage} />;
 };
 
 export default DocsPage;

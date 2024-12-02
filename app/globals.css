@@ -15,6 +15,7 @@ html,
 body,
 :root {
   height: 100%;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,6 +36,10 @@ body,
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
+    --background-table: 0 0% 100%;
+    --background-table-accent: 240 4.8% 95.9%;
+    --code: 240 4.8% 90%;
+    --code-foreground: 210, 63%, 13%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
@@ -68,19 +73,23 @@ body,
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 240 10% 3.9%;
+    --background: 210, 63%, 13%;
     --foreground: 0 0% 98%;
+    --background-table: 210, 63%, 33%;
+    --background-table-accent: 210, 63%, 23%;
+    --code: 0 0% 98%;
+    --code-foreground: 210, 63%, 13%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
+    --popover: 210, 63%, 13%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary-foreground: 210, 63%, 13%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
+    --accent: 210, 63%, 23%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
@@ -92,12 +101,12 @@ body,
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
+    --sidebar-background: 210, 63%, 13%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-accent: 210, 63%, 23%;
+    --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
@@ -185,7 +194,7 @@ body,
     @apply my-4 rounded-md;
   }
   pre {
-    @apply my-4 lg:w-[1000px] md:w-[800px] w-full;
+    @apply my-4  w-full;
     code {
       @apply rounded-md;
     }
@@ -196,19 +205,19 @@ body,
 
   table th,
   table td {
-    @apply px-4 py-2 border rounded-lg;
+    @apply px-4 py-2 border bg-background-table;
   }
 
   table th {
-    @apply text-left font-semibold bg-white;
+    @apply text-left font-semibold;
   }
 
   table tr:nth-child(odd) {
-    @apply rounded-lg py-5 bg-gray-50;
+    @apply py-5 bg-accent;
   }
 
   table tr:nth-child(even) {
-    @apply bg-white rounded-md;
+    @apply bg-white;
   }
 
   h1,
@@ -246,7 +255,7 @@ body,
       @apply no-underline font-normal;
     }
     .overview-card {
-      @apply p-3 border rounded shadow-sm flex flex-col gap-y-4 transition-transform duration-200 ease-in-out hover:scale-95;
+      @apply p-3 border border-accent rounded shadow-sm flex flex-col gap-y-4 transition-transform duration-200 ease-in-out hover:scale-95;
     }
 
     .overview-card-title {
@@ -274,21 +283,31 @@ body,
   @apply p-3 rounded  flex gap-x-4  bg-emerald-200 text-emerald-500 mt-5;
 }
 
-/* Apply flex layout to elements */
 .markdown-body-api-reference {
   @apply list-disc list-inside flex flex-col gap-y-6 w-full;
   .body-content {
     @apply md:w-[60%] w-full flex flex-col gap-y-3;
   }
-  div {
-    @apply flex gap-x-10 w-full;
-    div {
-      @apply flex flex-col gap-y-5 w-full;
-    }
+  .api-content {
+    @apply flex gap-x-10 w-full mb-24;
+  }
+  .code-content {
+    @apply flex flex-col gap-y-5 w-[40%]; /* Adjust top value to match 80px in your layout */
+  }
+  .table-content {
+    @apply flex flex-col gap-y-5 w-[60%];
+  }
+  .lang-select {
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    color: #002451;
+    font-size: 0.875rem;
   }
 
   table td {
-    @apply px-4 py-8 border-none rounded-lg;
+    @apply px-4 py-8 border-none;
     .table-description {
       @apply text-sm font-light;
     }
@@ -309,20 +328,23 @@ body,
     transition: height 1s ease, opacity 1s ease;
   }
 
-  table th {
-    @apply text-left font-semibold bg-white;
+  table {
+    @apply bg-background-table;
+    th {
+      @apply text-left font-semibold p-4;
+    }
   }
 
   table tr:nth-child(odd) {
-    @apply rounded-lg py-5 bg-gray-50;
+    @apply rounded-lg bg-background-table-accent;
   }
 
   table tr:nth-child(even) {
-    @apply bg-white rounded-md;
+    @apply bg-background-table rounded-lg;
   }
 
   pre {
-    @apply w-[90%] max-w-full;
+    @apply w-full;
     code {
       @apply rounded-md;
     }
@@ -348,6 +370,10 @@ body,
   li {
     @apply my-2 ml-6;
   }
+}
+
+.responses-card {
+  @apply p-2 bg-white rounded-md text-code-foreground;
 }
 
 .code-block {
@@ -441,7 +467,7 @@ pre code {
 }
 
 code {
-  @apply bg-slate-200 font-semibold font-mono leading-6 border border-gray-300 p-1 rounded-md;
+  @apply bg-code font-light font-mono leading-6 border border-gray-300 p-1 rounded-md text-code-foreground;
 }
 
 .material-symbols-outlined {

@@ -137,11 +137,13 @@ const response = await axios.post(
     "bank_account_id": "BANK-1234",          // The ID of the bank account
     "tags": ["business", "expansion"]        // The tags of the loan
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -182,11 +184,13 @@ const response = await axios.post(
     "description": "Monthly loan repayment", // The description of the payment
     "loan_id": "LOAN-001"                    // The ID of the loan
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

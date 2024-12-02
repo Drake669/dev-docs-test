@@ -245,11 +245,13 @@ const response = await axios.post(
             ]
         }
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

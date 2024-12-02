@@ -6,10 +6,10 @@ Suppliers refer to businesses or individuals that provide goods or services to a
 
 ### Get All Suppliers
 
-To get all suppliers, make a `GET` request to the `/getallaccounts` endpoint. Sample request using axios:
+To get all suppliers, make a `GET` request to the `/suppliers` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/getallaccounts");
+const response = await axios.get("/api/v3/suppliers");
 ```
 
 #### Sample Response object:
@@ -105,11 +105,13 @@ const response = await axios.post(
       "end_date": "2024-11-30",      // Represents the end date of adding a new supplier
       "reference": "SUP-001"         // Represents the reference for the new supplier
     },
+    {
     headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -120,9 +122,7 @@ The `Response` object returned is the same as the one for getting all suppliers
 Sample axios request to get a single supplier
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/supplier/banks/id"
-);
+const response = axios.get("/api/v3/suppliers/:id");
 ```
 
 - `:id` represents the id of the supplier you want to view
@@ -132,26 +132,28 @@ The `Response` object received is same as the response after <a href="#adding-a-
 ### Adding a New Supplier
 
 To add a new supplier, you will need to enter supplier name, supplier email, supplier address, and supplier phone number to add a new supplier.
-Make a `POST` request to `/createsupplier` endpoint to add a new supplier. Sample request using axios:
+Make a `POST` request to `/suppliers` endpoint to add a new supplier. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/createsupplier",
+  "/api/v3/suppliers",
   {
-    "supplier_name": "ABC Supplies Ltd.",    // The name of the supplier
-    "supplier_address": "123 Business St, City, Country",  // The address of the supplier
-    "supplier_phone": "+1234567890",          // The phone number of the supplier
-    "supplier_email": "contact@abcsupplies.com",  // The email address of the supplier
-    "supplier_location": "Downtown, City",    // The location of the supplier
-    "bank_code": "XYZ123",                    // The bank code of the supplier
-    "account_number": "00123456789",          // The bank account number of the supplier
-    "account_name": "ABC Supplies Ltd. Account"  // The name of the account
-    },
-  headers: {
+    supplier_name: "ABC Supplies Ltd.", // The name of the supplier
+    supplier_address: "123 Business St, City, Country", // The address of the supplier
+    supplier_phone: "+1234567890", // The phone number of the supplier
+    supplier_email: "contact@abcsupplies.com", // The email address of the supplier
+    supplier_location: "Downtown, City", // The location of the supplier
+    bank_code: "XYZ123", // The bank code of the supplier
+    account_number: "00123456789", // The bank account number of the supplier
+    account_name: "ABC Supplies Ltd. Account", // The name of the account
+  },
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -181,7 +183,7 @@ Here is an example response received after successfully adding a new supplier:
 
 ### Update a Supplier
 
-To update a supplier, make a `POST` request to the `/supplier/:id` endpoint.
+To update a supplier, make a `POST` request to the `/suppliers/:id` endpoint.
 
 - `:id` represents the id of the supplier you want to edit
 
@@ -189,7 +191,7 @@ Check out <a href="#adding-a-new-supplier">Adding a New supplier</a> to see how 
 
 ### Archiving a Supplier
 
-To archive a supplier, make a `ARCHIVE` request to the `/suppliers/id/archive/`
+To archive a supplier, make a `ARCHIVE` request to the `/suppliers/:id/archive/`
 
 - `id` - This represents the ID of the supplier you want to archive
 
@@ -198,27 +200,27 @@ Here is an example response received after successfully archiving a supplier:
 ```json
 {
   "id": 1573,
-    "owner_id": 1,
-    "business_id": 1,
-    "supplier_name": "Albert Fynn",
-    "supplier_address": "",
-    "supplier_phone": "",
-    "supplier_location": "",
-    "supplier_email": "",
-    "created_at": "2021-07-28T23:55:22.000000Z",
-    "updated_at": "2024-11-05T16:56:33.000000Z",
-    "bank_code": null,
-    "account_number": null,
-    "account_name": null,
-    "bank_id": null,
-    "account_id": 116258,
-    "archived": true
+  "owner_id": 1,
+  "business_id": 1,
+  "supplier_name": "Albert Fynn",
+  "supplier_address": "",
+  "supplier_phone": "",
+  "supplier_location": "",
+  "supplier_email": "",
+  "created_at": "2021-07-28T23:55:22.000000Z",
+  "updated_at": "2024-11-05T16:56:33.000000Z",
+  "bank_code": null,
+  "account_number": null,
+  "account_name": null,
+  "bank_id": null,
+  "account_id": 116258,
+  "archived": true
 }
 ```
 
 ### Removing a Supplier
 
-To remove a supplier, make a `DELETE` request to the `/deletesupplier/:id`
+To remove a supplier, make a `DELETE` request to the `/suppliers/:id`
 
 - `id` - This represents the ID of the supplier you want to delete
 
@@ -227,26 +229,26 @@ Here is an example response received after successfully removing a supplier:
 ```json
 {
   "id": 20766,
-    "owner_id": 1,
-    "business_id": 1,
-    "supplier_name": "Araphat Dimah",
-    "supplier_address": "P.O. Box 99",
-    "supplier_phone": "0209714564",
-    "supplier_location": "",
-    "supplier_email": "test@gmail.com",
-    "created_at": "2024-11-05T16:44:56.000000Z",
-    "updated_at": "2024-11-05T16:51:58.000000Z",
-    "bank_code": "",
-    "account_number": "",
-    "account_name": "",
-    "bank_id": "",
-    "account_id": 1082237,
-    "archived": false,
-    "transactions": [],
-    "unformated_balance": 0,
-    "balance": "0.00",
-    "total_debit": "0.00",
-    "total_credit": "0.00",
-    "has_payment_account": false
+  "owner_id": 1,
+  "business_id": 1,
+  "supplier_name": "Araphat Dimah",
+  "supplier_address": "P.O. Box 99",
+  "supplier_phone": "0209714564",
+  "supplier_location": "",
+  "supplier_email": "test@gmail.com",
+  "created_at": "2024-11-05T16:44:56.000000Z",
+  "updated_at": "2024-11-05T16:51:58.000000Z",
+  "bank_code": "",
+  "account_number": "",
+  "account_name": "",
+  "bank_id": "",
+  "account_id": 1082237,
+  "archived": false,
+  "transactions": [],
+  "unformated_balance": 0,
+  "balance": "0.00",
+  "total_debit": "0.00",
+  "total_credit": "0.00",
+  "has_payment_account": false
 }
 ```

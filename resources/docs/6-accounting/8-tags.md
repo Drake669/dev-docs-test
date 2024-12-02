@@ -1,15 +1,15 @@
 #meta-data title: Tags, description: Track revenue and expenses using Tags.
+
 ## Tags
 
 Tags are labels or identifiers used to categorize or organize financial transactions for better tracking and reporting.
 
-
 ### Get All Tags
 
-To get all Tags, make a `GET` request to the `/tags` endpoint. Sample request using axios:
+To get all Tags, make a `GET` request to the `/api/v3/tags` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/tags");
+const response = await axios.get("/api/v3/tags");
 ```
 
 #### Sample Response object:
@@ -80,29 +80,29 @@ const response = await axios.get("/api/v2/tags");
 Sample axios request to get a single tag.
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/tag/tagName"
-);
+const response = axios.get("/api/v3/tags/middleout");
 ```
 
-- `:tagName` represents the tag name of the tag you want to get
+- `:middleout` represents the tag name of the tag you want to get
 
 ### Adding a Tag
 
 To add a tag, you will need to enter the tag name to create a tag.
-Make a `POST` request to `/reconciliation/create` endpoint to add a tag. Sample request using axios:
+Make a `POST` request to `/api/v3/tags` endpoint to add a tag. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/reconciliation/create",
+  "/api/v3/tags",
   {
-    "name": "test-for-tag" //the name of the tag to be added
+    name: "test-for-tag", //the name of the tag to be added
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -110,11 +110,11 @@ Here is an example response received after successfully adding a new tag:
 
 ```json
 {
-    "business_id": 1,
-    "name": "test-for-tag",
-    "updated_at": "2024-11-07T12:21:21.000000Z",
-    "created_at": "2024-11-07T12:21:21.000000Z",
-    "id": 24514
+  "business_id": 1,
+  "name": "test-for-tag",
+  "updated_at": "2024-11-07T12:21:21.000000Z",
+  "created_at": "2024-11-07T12:21:21.000000Z",
+  "id": 24514
 }
 ```
 

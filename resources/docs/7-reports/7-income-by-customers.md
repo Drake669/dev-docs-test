@@ -1,20 +1,21 @@
 #meta-data title: Income by Customers, description: A list of all customers and the income you have generated from them.
+
 ## Income by Customers
 
 Income by Customers is a financial report or analysis that breaks down a business’s revenue by individual customers or customer segments over a specific period.
 
 ### Get All Income by Customers
 
-To get all Income by Customers, make a `GET` request to the `/analytics/customers/<startdate>/<enddate>` endpoint. Sample request using axios:
+To get all Income by Customers, make a `GET` request to the `/api/v3/reports/customers/:from/:to` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("https://web.builtaccounting.com/api/analytics/customers/<startdate>/<enddate>");
+const response = await axios.get("/api/v3/reports/customers/:from/:to");
 ```
-  
-Where `<startdate>` is the start date and `<enddate>` is the end date of the Income by Customers list
+
+Where `<from>` is the start date and `<to>` is the end date of the Income by Customers list
 
 #### Sample Response object:
-    
+
 ```json
 {
     {
@@ -121,36 +122,36 @@ Where `<startdate>` is the start date and `<enddate>` is the end date of the Inc
 Sample axios request to get a single income by customers
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/client/id"
-);
+const response = axios.get("/api/v3/reports/customers/client/:id/:from/:to");
 ```
 
 - `<id>` is the id of the income by the customer
+- `<from>` is the starting date for income by customer
+- `<to>` is the ending date for income by customer
 
 ### Filtering of Income By Customers
 
-To filter a income by customers, select starting date, and end date then make a `POST` request to the `/client/transactions/id?from=<start_date>&to=<end_date>` endpoint. Sample request using axios:
+To filter a income by customers, select starting date, and end date then make a `POST` request to the `/api/v3/reports/customers/client/:id/:from/:to` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/client/transactions/id?from=<start_date>&to=<end_date>",
+  "/api/v3/reports/customers/client/:id/:from/:to",
   {
-      "id": 12345,                // The id of the income by customer
-      "start_date": "2024-11-01", // Represents the start date of the income by customer
-      "end_date": "2024-11-30"    // Represents the end date of the income by customer
+    id: 12345, // The id of the income by customer
+    from: "2024-11-01", // Represents the start date of the income by customer
+    to: "2024-11-30", // Represents the end date of the income by customer
   },
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json"
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 );
 ```
 
 The `Response` object returned is the same as the one for getting all incomes by customers
-
-
 
 ### Sending an Income to Customer
 
@@ -159,17 +160,19 @@ Make a `POST` request to `/client/transactions/send/id?from=<startdate>&to=<endd
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/client/transactions/send/id?from=<startdate>&to=<enddate>",
+  "/api/v3/reports/customers/client/transactions/send/id?from=<startdate>&to=<enddate>",
   {
-        "send_tome": "2024-11-07",                     // The send time of the income
-        "other_emails": ["example@example.com", "another@example.com"],  // The other email addresses to send the income to
-        "message": "This is the message to be sent with the income notification." // The message of the income to be sent to the email address
+    send_tome: "2024-11-07", // The send time of the income
+    other_emails: ["example@example.com", "another@example.com"], // The other email addresses to send the income to
+    message: "This is the message to be sent with the income notification.", // The message of the income to be sent to the email address
   },
-headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json"
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 );
 ```
 

@@ -6,7 +6,7 @@ Track and review user activities within your business using Built's Audit Trail 
 
 ### Getting All User Actions
 
-To get all user actions, make a `GET` request to the `useractions` endpoint. Here is the response you get:
+To get all user actions, make a `GET` request to the `/api/v3/user-actions` endpoint. Here is the response you get:
 
 ```json
 {
@@ -59,9 +59,9 @@ To get all user actions, make a `GET` request to the `useractions` endpoint. Her
 
 ### Filtering of User Actions
 
-This section allows you to narrow down user actions by specifying a date range. By providing a `startdate` and an `enddate`, you can view only the activities performed within this period. This filtering feature helps you easily track actions over specific timeframes, making it simpler to review user activity within a defined period.
+This section allows you to narrow down user actions by specifying a date range. By providing a `from` and a `to` dates, you can view only the activities performed within this period. This filtering feature helps you easily track actions over specific timeframes, making it simpler to review user activity within a defined period.
 
-To filter user actions, make a `GET` request to the `/useractions/filter/:startdate/:enddate` endpoint. The dates should be in `YYYY-MM-DD` format.
+To filter user actions, make a `GET` request to the `/api/v3/user-actions/filter/:from/:to` endpoint. The dates should be in `YYYY-MM-DD` format.
 
 #### Sample Response Object
 

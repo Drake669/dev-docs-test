@@ -6,16 +6,18 @@ Income by Products/Services is a financial report that breaks down a company’s
 
 ### Get All Income by Products/Services
 
-To get all income by products/services, make a `GET` request to the `/analytics/products/<startdate>&<enddate>` endpoint. Sample request using axios:
+To get all income by products/services, make a `GET` request to the `/api/v3/reports/products/:from/:to` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("https://web.builtaccounting.com/api/analytics/products/<startdate>&<enddate>");
+const response = await axios.get("/api/v3/reports/products/:from/:to");
 ```
-  
-Where `<startdate>` is the start date and `<enddate>` is the end date of the income by products/services list
+
+Where `<from>` is the start date and `<to>` is the end date of the income by products/services list
 
 #### Sample Response object:
-    
+
+
+
 ```json
 {
     {

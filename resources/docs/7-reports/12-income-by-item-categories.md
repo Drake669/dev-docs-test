@@ -6,16 +6,18 @@ Income by Item Categories is a report that organizes a company’s revenue accor
 
 ### Get All Income by Item Categories
 
-To get all income by item categories, make a `GET` request to the `/analytics/v2/category-income/<startdate>&<enddate>` endpoint. Sample request using axios:
+To get all income by item categories, make a `GET` request to the `/api/v3/reports/categories/:from/:to` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("https://web.builtaccounting.com/api/analytics/v2/category-income/<startdate>&<enddate>");
+const response = await axios.get("/api/v3/reports/categories/:from/:to");
 ```
-  
-Where `<startdate>` is the start date and `<enddate>` is the end date of the income by item categories list
+
+Where `<from>` is the start date and `<to>` is the end date of the income by item categories list
 
 #### Sample Response object:
-    
+
+
+
 ```json
 {
     {

@@ -1,182 +1,779 @@
-#meta-data title: Other Incomes, description: Track miscellaneous income sources to maintain complete financial records.
+#meta-data title: Other Incomes
 
 ## Other Incomes
 
-Track miscellaneous income sources to maintain complete financial records.
+### Create Other Income
 
-### Get Other Incomes
+<div class="api-content">
 
-To get the list of other incomes, make a `GET` request to the `/otherincomes` endpoint. Sample request using axios:
+<div class="table-content no-scrollbar">
+
+#### Headers
+
+<table>
+  <tbody>
+<tr>
+                <td style="text-align:left">Authorization
+                  <div class="table-description">string</div>
+                </td>
+                <td style="text-align:left">Set value to <code>Bearer SECRET_KEY</code></td>
+              </tr><tr>
+                  <td style="text-align:left">Accept
+                    <div class="table-description">string</div>
+                  </td>
+                  <td style="text-align:left"><code>application/json</code></td>
+                </tr>  </tbody>
+</table>
+
+#### Body params
+
+<table>
+  <tbody>
+<tr>
+          <td style="text-align:left">income_accountID
+            <div class="table-description">integer</div>
+          </td>
+          <td style="text-align:left">The income account id
+            </td>
+        </tr><tr>
+          <td style="text-align:left">payment_accountID
+            <div class="table-description">integer</div>
+          </td>
+          <td style="text-align:left">The payment account id
+            </td>
+        </tr><tr>
+          <td style="text-align:left">amount
+            <div class="table-description">double</div>
+          </td>
+          <td style="text-align:left">The amount to record
+            </td>
+        </tr><tr>
+          <td style="text-align:left">entry_date
+            <div class="table-description">date</div>
+          </td>
+          <td style="text-align:left">The entry date of the transaction
+            </td>
+        </tr></tbody>
+</table>
+
+<div class="optional-parameters">
+
+<table>
+  <tbody>
+<tr>
+          <td style="text-align:left">tag
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">Comma separated string of tags
+            </td>
+        </tr><tr>
+          <td style="text-align:left">ref
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">A reference
+            </td>
+        </tr><tr>
+          <td style="text-align:left">description
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">A description for the transaction
+            </td>
+        </tr></tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="code-content">
 
 ```js
-const response = await axios.get("/api/otherincomes");
+const axios = require("axios");
+
+axios({
+  method: "POST",
+  url: "/api/v3/other-incomes",
+  headers: {
+    Accept: "application/json",
+    Authorization: "Bearer {{token}}",
+  },
+
+  data: {
+    income_accountID: 8764,
+    payment_accountID: 8762,
+    amount: 10,
+    entry_date: "2024-11-01",
+    tag: "tag",
+    ref: "ref",
+    description: "desc",
+  },
+})
+  .then((response) => console.log(response.data))
+  .catch((error) => console.error(error));
 ```
 
-#### Sample Response object:
+```go
+package main
+
+import (
+    "bytes"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    client := &http.Client{}
+
+    var jsonStr = []byte(`{
+  "income_accountID": 8764,
+  "payment_accountID": 8762,
+  "amount": 10,
+  "entry_date": "2024-11-01",
+  "tag": "tag",
+  "ref": "ref",
+  "description": "desc"
+}`)
+    req, err := http.NewRequest("POST", "/api/v3/other-incomes", bytes.NewBuffer(jsonStr))
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    req.Header = map[string][]string{
+        "Accept": {"application/json"},
+"Authorization": {"Bearer {{token}}"}
+    }
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(string(body))
+}
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use GuzzleHttpClient;
+
+$client = new Client();
+
+try {
+    $response = $client->request("POST", "/api/v3/other-incomes", [
+        'headers' => [
+            "Accept" => "application/json",
+            "Authorization" => "Bearer {{token}}"
+        ],
+
+        'json' => {
+  "income_accountID": 8764,
+  "payment_accountID": 8762,
+  "amount": 10,
+  "entry_date": "2024-11-01",
+  "tag": "tag",
+  "ref": "ref",
+  "description": "desc"
+},
+    ]);
+
+    echo $response->getBody();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+```
 
 ```json
 [
   {
-    "id": 4912,
-    "ref": "",
-    "user_id": 1,
-    "business_id": 1,
-    "description": "",
-    "amount": 100,
-    "payment_accountID": 2,
-    "income_accountID": 40,
-    "entry_date": "2023-08-21",
-    "created_at": "2023-08-21T10:51:40.000000Z",
-    "updated_at": "2023-08-21T10:51:40.000000Z",
-    "tag": "",
-    "deleted_at": null,
-    "serial_number": "oin-2023-08-21-16",
-    "income_account": {
-      "id": 40,
-      "account_name": "Discounts",
-      "type_id": 1,
-      "subtype_id": 13,
-      "code": "N/A",
-      "description": null,
-      "user_id": 1,
-      "business_id": 1,
-      "holder_id": 0,
-      "created_at": "2020-03-05T01:42:57.000000Z",
-      "updated_at": "2020-03-05T01:42:57.000000Z",
-      "currency": null,
-      "archived": false,
-      "live_account_id": null,
-      "live_balance": "0",
-      "live_bank_account_data": null
-    },
-    "payment_account": {
-      "id": 2,
-      "account_name": "Cash On Hand",
-      "type_id": 3,
-      "subtype_id": 3,
-      "code": "N/A",
-      "description": "Cash On Hand",
-      "user_id": 1,
-      "business_id": 1,
-      "holder_id": 0,
-      "created_at": "2020-03-05T01:42:57.000000Z",
-      "updated_at": "2024-03-11T13:29:26.000000Z",
-      "currency": "GHS",
-      "archived": true,
-      "live_account_id": null,
-      "live_balance": "0",
-      "live_bank_account_data": null
+    "name": "422 Validation Errors",
+    "body": {
+      "message": "The given data was invalid.",
+      "errors": {
+        "income_accountID": ["The income account i d field is required."],
+        "payment_accountID": ["The payment account i d field is required."],
+        "amount": ["The amount field is required."],
+        "entry_date": ["The entry date field is required."]
+      }
     }
   },
   {
-    "id": 4833,
-    "ref": "",
-    "user_id": 1,
-    "business_id": 1,
-    "description": "testing serial number",
-    "amount": 1000,
-    "payment_accountID": 2,
-    "income_accountID": 17103,
-    "entry_date": "2023-08-10",
-    "created_at": "2023-08-10T10:39:06.000000Z",
-    "updated_at": "2023-08-10T10:39:06.000000Z",
-    "tag": "",
-    "deleted_at": null,
-    "serial_number": "oin-2023-08-10-15",
-    "income_account": {
-      "id": 17103,
-      "account_name": "One off services",
-      "type_id": 1,
-      "subtype_id": 13,
-      "code": "N/A",
-      "description": "",
-      "user_id": 1,
-      "business_id": 1,
-      "holder_id": null,
-      "created_at": "2020-07-23T14:57:31.000000Z",
-      "updated_at": "2020-07-23T14:57:31.000000Z",
-      "currency": null,
-      "archived": false,
-      "live_account_id": null,
-      "live_balance": "0",
-      "live_bank_account_data": null
-    },
-    "payment_account": {
-      "id": 2,
-      "account_name": "Cash On Hand",
-      "type_id": 3,
-      "subtype_id": 3,
-      "code": "N/A",
-      "description": "Cash On Hand",
-      "user_id": 1,
-      "business_id": 1,
-      "holder_id": 0,
-      "created_at": "2020-03-05T01:42:57.000000Z",
-      "updated_at": "2024-03-11T13:29:26.000000Z",
-      "currency": "GHS",
-      "archived": true,
-      "live_account_id": null,
-      "live_balance": "0",
-      "live_bank_account_data": null
+    "name": "200 Success",
+    "body": {
+      "user_id": 31,
+      "business_id": 57,
+      "amount": "10",
+      "entry_date": "2024-11-01",
+      "payment_accountID": "8762",
+      "income_accountID": "8764",
+      "ref": "ref",
+      "description": "desc",
+      "created_at": "2024-11-22T08:34:56.000000Z",
+      "updated_at": "2024-11-22T08:34:56.000000Z",
+      "id": 8
     }
   }
 ]
 ```
 
-### Creating an Other Income
+</div>
 
-Make a `POST` request to `/otherincome` endpoint to create an other income. Sample request using axios:
+</div>
+
+### Get Other Incomes
+
+<div class="api-content">
+
+<div class="table-content no-scrollbar">
+
+#### Headers
+
+<table>
+  <tbody>
+<tr>
+                <td style="text-align:left">Authorization
+                  <div class="table-description">string</div>
+                </td>
+                <td style="text-align:left">Set value to <code>Bearer SECRET_KEY</code></td>
+              </tr>  </tbody>
+</table>
+
+</div>
+
+<div class="code-content">
 
 ```js
-const response = await axios.post("<BASE_URL>/api/otherincome", 
-{
-  "income_accountID": "ACC001", // The ID of the income account
-  "payment_accountID": "ACC002", // The ID of the payment account
-  "amount": 500.00, // The amount received
-  "currency": "USD", // The currency of the payment
-  "reference": "REF123456", // The reference of the transaction
-  "description": "Payment for services rendered", // A description attached to the income
-  "tag": "Business Income" // A tag attached to the income
-},
-{
+const axios = require("axios");
+
+axios({
+  method: "GET",
+  url: "/api/v3/other-incomes",
   headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
+    Authorization: "Bearer {{token}}",
   },
-});
+})
+  .then((response) => console.log(response.data))
+  .catch((error) => console.error(error));
 ```
 
-Here is an example response received after successfully creating an income:
+```go
+package main
 
-```json
-{
-  "user_id": 1,
-  "business_id": 1,
-  "amount": "200",
-  "entry_date": "2024-11-4",
-  "payment_accountID": "3",
-  "income_accountID": "39",
-  "ref": "Test",
-  "description": "Test",
-  "created_at": "2024-11-04T15:48:10.000000Z",
-  "updated_at": "2024-11-04T15:48:10.000000Z",
-  "id": 8251
+import (
+    "bytes"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    client := &http.Client{}
+
+    req, err := http.NewRequest("GET", "/api/v3/other-incomes", nil)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    req.Header = map[string][]string{
+        "Authorization": {"Bearer {{token}}"}
+    }
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(string(body))
 }
 ```
 
-### Update an Other Income
+```php
+<?php
 
-To update an income, make a `POST` request to the `/otherincome/:id` endpoint.
+require 'vendor/autoload.php';
 
-- `:id` represents the id of the income you want to edit
+use GuzzleHttpClient;
 
-Check out <a href="#creating-an-other-income">Creating an other income</a> to see how to make the request and the shape of the `RESPONSE` object
+$client = new Client();
 
-### Delete an other income
+try {
+    $response = $client->request("GET", "/api/v3/other-incomes", [
+        'headers' => [
+            "Authorization" => "Bearer {{token}}"
+        ],
 
-To delete an other income, make a `DELETE` request to the `/deleteotherincome:id` endpoint. Here is a sample request using axios
+
+    ]);
+
+    echo $response->getBody();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+```
+
+```json
+[
+  {
+    "name": "200 Success",
+    "body": [
+      {
+        "id": 7,
+        "ref": "ref",
+        "user_id": 31,
+        "business_id": 57,
+        "description": "desc",
+        "amount": 10,
+        "payment_accountID": 1,
+        "income_accountID": 1,
+        "entry_date": "2024-11-01",
+        "created_at": "2024-11-22T08:31:08.000000Z",
+        "updated_at": "2024-11-22T08:31:08.000000Z",
+        "deleted_at": null,
+        "tag": null,
+        "serial_number": "oin-2024-11-22-1",
+        "income_account": {
+          "id": 1,
+          "account_name": "Inventory",
+          "type_id": 3,
+          "subtype_id": 1,
+          "code": "N/A",
+          "description": "Inventory",
+          "user_id": 13,
+          "business_id": 1,
+          "holder_id": 0,
+          "created_at": "2021-11-20T02:08:01.000000Z",
+          "updated_at": "2021-11-20T02:08:01.000000Z",
+          "currency": null,
+          "archived": false,
+          "live_account_id": null,
+          "live_balance": "0",
+          "live_bank_account_data": null
+        },
+        "payment_account": {
+          "id": 1,
+          "account_name": "Inventory",
+          "type_id": 3,
+          "subtype_id": 1,
+          "code": "N/A",
+          "description": "Inventory",
+          "user_id": 13,
+          "business_id": 1,
+          "holder_id": 0,
+          "created_at": "2021-11-20T02:08:01.000000Z",
+          "updated_at": "2021-11-20T02:08:01.000000Z",
+          "currency": null,
+          "archived": false,
+          "live_account_id": null,
+          "live_balance": "0",
+          "live_bank_account_data": null
+        }
+      }
+    ]
+  }
+]
+```
+
+</div>
+
+</div>
+
+### Update Other Income
+
+<div class="api-content">
+
+<div class="table-content no-scrollbar">
+
+#### Headers
+
+<table>
+  <tbody>
+<tr>
+                <td style="text-align:left">Authorization
+                  <div class="table-description">string</div>
+                </td>
+                <td style="text-align:left">Set value to <code>Bearer SECRET_KEY</code></td>
+              </tr><tr>
+                  <td style="text-align:left">Accept
+                    <div class="table-description">string</div>
+                  </td>
+                  <td style="text-align:left"><code>application/json</code></td>
+                </tr>  </tbody>
+</table>
+
+#### Body params
+
+<table>
+  <tbody>
+<tr>
+          <td style="text-align:left">income_accountID
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">The income account id
+            </td>
+        </tr><tr>
+          <td style="text-align:left">payment_accountID
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">The payment account id
+            </td>
+        </tr><tr>
+          <td style="text-align:left">amount
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">The amount to record
+            </td>
+        </tr><tr>
+          <td style="text-align:left">entry_date
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">The entry date of the transaction
+            </td>
+        </tr></tbody>
+</table>
+
+<div class="optional-parameters">
+
+<table>
+  <tbody>
+<tr>
+          <td style="text-align:left">tag
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">Comma separated string of tags
+            </td>
+        </tr><tr>
+          <td style="text-align:left">ref
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">A reference
+            </td>
+        </tr><tr>
+          <td style="text-align:left">description
+            <div class="table-description">string</div>
+          </td>
+          <td style="text-align:left">A description for the transaction
+            </td>
+        </tr></tbody>
+</table>
+
+</div>
+
+#### Path Parameters
+
+<table>
+  <tbody>
+<tr>
+          <td style="text-align:left">id
+            <div class="table-description">integer</div>
+          </td>
+          <td style="text-align:left">The id of the record to update
+            </td>
+        </tr></tbody>
+</table>
+
+</div>
+
+<div class="code-content">
 
 ```js
-const response = await axios.delete("<BASE_URL>/api/deleteotherincome/8251");
+const axios = require("axios");
+
+axios({
+  method: "POST",
+  url: "/api/v3/other-incomes/:id",
+  headers: {
+    Accept: "application/json",
+    Authorization: "Bearer {{token}}",
+  },
+
+  data: {
+    income_accountID: 8764,
+    payment_accountID: 8762,
+    amount: 10,
+    entry_date: "2024-11-01",
+    tag: "tag",
+    ref: "ref",
+    description: "desc",
+  },
+})
+  .then((response) => console.log(response.data))
+  .catch((error) => console.error(error));
 ```
+
+```go
+package main
+
+import (
+    "bytes"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    client := &http.Client{}
+
+    var jsonStr = []byte(`{
+  "income_accountID": 8764,
+  "payment_accountID": 8762,
+  "amount": 10,
+  "entry_date": "2024-11-01",
+  "tag": "tag",
+  "ref": "ref",
+  "description": "desc"
+}`)
+    req, err := http.NewRequest("POST", "/api/v3/other-incomes/:id", bytes.NewBuffer(jsonStr))
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    req.Header = map[string][]string{
+        "Accept": {"application/json"},
+"Authorization": {"Bearer {{token}}"}
+    }
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(string(body))
+}
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use GuzzleHttpClient;
+
+$client = new Client();
+
+try {
+    $response = $client->request("POST", "/api/v3/other-incomes/:id", [
+        'headers' => [
+            "Accept" => "application/json",
+            "Authorization" => "Bearer {{token}}"
+        ],
+
+        'json' => {
+  "income_accountID": 8764,
+  "payment_accountID": 8762,
+  "amount": 10,
+  "entry_date": "2024-11-01",
+  "tag": "tag",
+  "ref": "ref",
+  "description": "desc"
+},
+    ]);
+
+    echo $response->getBody();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+```
+
+```json
+[
+  {
+    "name": "422 Validation Errors",
+    "body": {
+      "message": "The given data was invalid.",
+      "errors": {
+        "income_accountID": ["The income account i d field is required."],
+        "payment_accountID": ["The payment account i d field is required."],
+        "amount": ["The amount field is required."],
+        "entry_date": ["The entry date field is required."]
+      }
+    }
+  },
+  {
+    "name": "302 Error",
+    "body": "Record not found"
+  },
+  {
+    "name": "200 Success",
+    "body": {
+      "id": 8,
+      "ref": "ref",
+      "user_id": 31,
+      "business_id": 57,
+      "description": "desc",
+      "amount": "10",
+      "payment_accountID": "8762",
+      "income_accountID": "8764",
+      "entry_date": "2024-11-01",
+      "created_at": "2024-11-22T08:34:56.000000Z",
+      "updated_at": "2024-11-22T08:40:33.000000Z",
+      "deleted_at": null,
+      "tag": "tag",
+      "serial_number": "oin-2024-11-22-2"
+    }
+  }
+]
+```
+
+</div>
+
+</div>
+
+### Delete Other Income
+
+<div class="api-content">
+
+<div class="table-content no-scrollbar">
+
+#### Headers
+
+<table>
+  <tbody>
+<tr>
+                <td style="text-align:left">Authorization
+                  <div class="table-description">string</div>
+                </td>
+                <td style="text-align:left">Set value to <code>Bearer SECRET_KEY</code></td>
+              </tr><tr>
+                  <td style="text-align:left">Accept
+                    <div class="table-description">string</div>
+                  </td>
+                  <td style="text-align:left"><code>application/json</code></td>
+                </tr>  </tbody>
+</table>
+
+#### Path Parameters
+
+<table>
+  <tbody>
+<tr>
+          <td style="text-align:left">id
+            <div class="table-description">integer</div>
+          </td>
+          <td style="text-align:left">The id of the record to update
+            </td>
+        </tr></tbody>
+</table>
+
+</div>
+
+<div class="code-content">
+
+```js
+const axios = require("axios");
+
+axios({
+  method: "DELETE",
+  url: "/api/v3/other-incomes/:id",
+  headers: {
+    Accept: "application/json",
+    Authorization: "Bearer {{token}}",
+  },
+})
+  .then((response) => console.log(response.data))
+  .catch((error) => console.error(error));
+```
+
+```go
+package main
+
+import (
+    "bytes"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    client := &http.Client{}
+
+    req, err := http.NewRequest("DELETE", "/api/v3/other-incomes/:id", nil)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    req.Header = map[string][]string{
+        "Accept": {"application/json"},
+"Authorization": {"Bearer {{token}}"}
+    }
+    resp, err := client.Do(req)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    defer resp.Body.Close()
+
+    body, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    fmt.Println(string(body))
+}
+```
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use GuzzleHttpClient;
+
+$client = new Client();
+
+try {
+    $response = $client->request("DELETE", "/api/v3/other-incomes/:id", [
+        'headers' => [
+            "Accept" => "application/json",
+            "Authorization" => "Bearer {{token}}"
+        ],
+
+
+    ]);
+
+    echo $response->getBody();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+```
+
+```json
+[
+  {
+    "name": "302 Error",
+    "body": "Record not found"
+  },
+  {
+    "name": "200 Success",
+    "body": "Income deleted successfully."
+  }
+]
+```
+
+</div>
+
+</div>

@@ -9,7 +9,7 @@ Prepayments refer to expenses paid in advance for goods or services that will be
 To get all prepayments, make a `GET` request to the `/prepaid-expenses` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/prepaid-expenses?page=<pagenumber>");
+const response = await axios.get("/api/v3/prepaid-expenses?page=<pagenumber>");
 ```
 
 Where `<pagenumber>` is the page number of the prepayments list
@@ -135,11 +135,13 @@ const response = await axios.post(
       "reference": "optional reference",          // An optional reference for the prepayment
       "tag": "air-conditioner"                     // Tag to categorize the prepayment (e.g., air-conditioner)
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -219,11 +221,13 @@ const response = await axios.post(
       "fx_rate": 1,                                // The foreign exchange rate (1 if no conversion is applied)
       "prepaid_expense_id": 74                    // The ID of the prepaid expense
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -310,11 +314,13 @@ const response = await axios.post(
       "time_unit": "month",                        // The time unit for the scheduled expense (e.g., month, year)
       "expense_account_id": 18                     // The ID of the scheduled expense account
     },
-  headers: {
+ {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

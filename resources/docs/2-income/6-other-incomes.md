@@ -6,10 +6,10 @@ Track miscellaneous income sources to maintain complete financial records.
 
 ### Get Other Incomes
 
-To get the list of other incomes, make a `GET` request to the `/otherincomes` endpoint. Sample request using axios:
+To get the list of other incomes, make a `GET` request to the `/other-incomes` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/otherincomes");
+const response = await axios.get("/api/v3/other-incomes");
 ```
 
 #### Sample Response object:
@@ -125,26 +125,28 @@ const response = await axios.get("/api/otherincomes");
 
 ### Creating an Other Income
 
-Make a `POST` request to `/otherincome` endpoint to create an other income. Sample request using axios:
+Make a `POST` request to `/other-incomes` endpoint to create an other income. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/otherincome", 
-{
-    "income_accountID": "INC-001",        // The ID of the income account
-    "payment_accountID": "PAY-123",       // The ID of the payment account
-    "amount": 1500.00,                    // The amount received
-    "currency": "USD",                    // The currency
-    "reference": "TRANS-456789",          // The reference of the transaction
-    "description": "Payment for consulting services", // A description attached to the income
-    "tag": "Consulting"                   // A tag attached to the income
-},
-{
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
+const response = await axios.post(
+  "/api/v3/other-incomes",
+  {
+    income_accountID: "INC-001", // The ID of the income account
+    payment_accountID: "PAY-123", // The ID of the payment account
+    amount: 1500.0, // The amount received
+    currency: "USD", // The currency
+    reference: "TRANS-456789", // The reference of the transaction
+    description: "Payment for consulting services", // A description attached to the income
+    tag: "Consulting", // A tag attached to the income
   },
-});
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
+);
 ```
 
 Here is an example response received after successfully creating an income:
@@ -167,7 +169,7 @@ Here is an example response received after successfully creating an income:
 
 ### Update an Other Income
 
-To update an income, make a `POST` request to the `/otherincome/:id` endpoint.
+To update an income, make a `POST` request to the `/api/v3/other-incomes/:id` endpoint.
 
 - `:id` represents the id of the income you want to edit
 
@@ -175,7 +177,7 @@ Check out <a href="#creating-an-other-income">Creating an other income</a> to se
 
 ### Delete an other income
 
-To delete an other income, make a `DELETE` request to the `/deleteotherincome:id` endpoint. Here is a sample request using axios
+To delete an other income, make a `DELETE` request to the `/api/v3/other-incomes/:id` endpoint. Here is a sample request using axios
 
 ```js
 const response = await axios.delete("<BASE_URL>/api/deleteotherincome/8251");

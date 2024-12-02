@@ -126,11 +126,13 @@ const response = await axios.post(
       "from": "2024-11-01",    // Represents the start date of the withholding tax report
       "to": "2024-11-30"       // Represents the end date of the withholding tax report
   },
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json"
-  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
 );
 ```
 

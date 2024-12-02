@@ -6,16 +6,18 @@ Cash Flow refers to the net amount of cash and cash equivalents that move into a
 
 ### Get All Cash Flows
 
-To get all cash flows, make a `GET` request to the `/newcashflow` endpoint. Sample request using axios:
+To get all cash flows, make a `GET` request to the `/api/v3/reports/cash-flow?startdate&enddate` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("https://web.builtaccounting.com/api/newcashflow/?<startdate>&<enddate>");
+const response = await axios.get("/api/v3/reports/cash-flow?startdate&enddate");
 ```
-  
+
 Where `<startdate>` is the start date and `<enddate>` is the end date of the income statements list
 
 #### Sample Response object:
-    
+
+
+
 ```json
 {
     "total_received": 1101,
@@ -105,9 +107,7 @@ Where `<startdate>` is the start date and `<enddate>` is the end date of the inc
 Sample axios request to get a single cash flow
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/transactions/filter/id?<startdate>&<enddate>"
-);
+const response = axios.get("/api/v3/reports/cash-flow/id?startdate&enddate/");
 ```
 
 - `id` represents the id of the cash flow you want to get
@@ -115,21 +115,23 @@ const response = axios.get(
 
 ### Filtering of Cash Flow
 
-To filter cash flow, select starting date, and end date then make a `POST` request to the `/transactions/filter/id?from=<start_date>&to=<end_date>` endpoint. Sample request using axios:
+To filter cash flow, select starting date, and end date then make a `POST` request to the `/api/v3/reports/cash-flow/filter/id?from=<start_date>&to=<end_date>` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/transactions/filter/id?from=<start_date>&to=<end_date>",
+  "/api/v3/reports/cash-flow/filter/id?from=<start_date>&to=<end_date>",
   {
-       "id": 12345,                   // Represents the id of cash flows
-      "from": "2024-11-01",          // Represents the start date of cash flows
-      "to": "2024-11-30"             // Represents the end date of cash flows
-    },
+    id: 12345, // Represents the id of cash flows
+    from: "2024-11-01", // Represents the start date of cash flows
+    to: "2024-11-30", // Represents the end date of cash flows
+  },
+  {
     headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

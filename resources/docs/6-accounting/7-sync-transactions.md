@@ -9,7 +9,7 @@ Sync Transactions refers to the process of automatically updating and aligning f
 To get all sync transactions, make a `GET` request to the `/sync/expenses` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/sync/expenses?page=<pagenumber>");
+const response = await axios.get("/api/v3/sync/expenses?page=<pagenumber>");
 ```
 
 Where `<pagenumber>` is the page number of the sync transactions list
@@ -136,7 +136,7 @@ Where `<pagenumber>` is the page number of the sync transactions list
 To get all sync incomes, make a `GET` request to the `/sync` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/sync?page=<pagenumber>");
+const response = await axios.get("/api/v3/sync?page=<pagenumber>");
 ```
 
 Where `<pagenumber>` is the page number of the sync incomes list
@@ -341,7 +341,7 @@ Here is an example response received after successfully removing a sync income:
 To get all sync expenses, make a `GET` request to the `/sync/expenses` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/sync/expenses?page=<pagenumber>");
+const response = await axios.get("/api/v3/sync/expenses?page=<pagenumber>");
 ```
 
 Where `<pagenumber>` is the page number of the sync expenses list

@@ -103,11 +103,13 @@ const response = await axios.post(
       "start_date": "2024-11-01",     // Represents the start date of the balance sheet
       "end_date": "2024-11-30"        // Represents the end date of the balance sheet
     },
+    {
     headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

@@ -4,17 +4,15 @@
 
 Manage deposits and deferred payments efficiently, allowing you to receive and return funds as needed.
 
-### Get All Deposit Transactions
+### Get All Deposits
 
-To get all deposit transactions, make a `GET` request to the `/deposits/transactions` endpoint. Sample request using axios:
+To get all deposits, make a `GET` request to the `/deposits` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get(
-  "<BASE_URL>/api/deposits/transactions?page=<pagenumber>"
-);
+const response = await axios.get("/api/v3/deposits");
 ```
 
-Where `<pagenumber>` is the page number of the deposit transactions list
+Where `<deposits>` is the page number of the deposits list
 
 #### Sample Response object:
 
@@ -147,14 +145,14 @@ Where `<pagenumber>` is the page number of the deposit transactions list
 }
 ```
 
-### Get Deposit Transactions Summaries
+### Get Deposit Summaries
 
 This returns an `Object` containing the summary information about the deposit transactionss
 
 To get deposit transactions summaries, make a `GET` request to the `/deposits/summaries` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("<BASE_URL>/api/deposits/summaries");
+const response = await axios.get("/api/v3/deposits/summaries");
 ```
 
 #### Sample Response object:
@@ -171,19 +169,53 @@ const response = await axios.get("<BASE_URL>/api/deposits/summaries");
 }
 ```
 
-### Creating a deposit
+### Filtering of Deposits
 
-Make a `POST` request to `/customer/:id/deposit` endpoint to create a deposit. Sample request using axios:
+To filter deposits, make a `POST` request to the `/deposits/flter` endpoint. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/customer/779/deposit",
+  "/api/v3/deposits/filter?from&to&type",
   {
-      "amount": 1000.00,                    // The amount deposited by the customer
-      "account_id": "ACC-123",              // The account the deposit was made into
-      "description": "Initial deposit for service subscription", // The description of the deposit
-      "date": "2024-11-11",                 // When the deposit was made
-      "type": "credit"                      // The type of the deposit (credit or debit)
+    amount: 1000.0, // The amount deposited by the customer
+    account_id: "ACC-123", // The account the deposit was made into
+    description: "Initial deposit for service subscription", // The description of the deposit
+    date: "2024-11-11", // When the deposit was made
+    type: "credit",
+  },
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
+);
+```
+
+### Get a Single Deposit Item
+
+Sample axios request to get a single deposit item
+
+```js
+const response = axios.get("/api/v3/deposits/:id");
+```
+
+The `Response` object received is same as the response after <a href="#creating-a-deposit">Creating a Deposit</a>
+
+### Creating a Deposit
+
+Make a `POST` request to `/customers/:id/deposits` endpoint to create a deposit. Sample request using axios:
+
+```js
+const response = await axios.post(
+  "/api/v3/customers/:id/deposits",
+  {
+    amount: 1000.0, // The amount deposited by the customer
+    account_id: "ACC-123", // The account the deposit was made into
+    description: "Initial deposit for service subscription", // The description of the deposit
+    date: "2024-11-11", // When the deposit was made
+    type: "credit", // The type of the deposit (credit or debit)
   },
   {
     headers: {
@@ -215,38 +247,67 @@ Here is an example response received after successfully creating a deposit:
 }
 ```
 
+### Get Customer Deposits
+
+Sample axios request to get customer deposits
+
+```js
+const response = axios.get("/api/v3/customers/:id/deposits");
+```
+
+### Get Customer Deposits Summary
+
+This returns an `Object` containing the summary information about the deposits of a customer.
+
+To get customer deposit summaries, make a `GET` request to the `/customers/:id/deposits/summary` endpoint. Sample request using axios:
+
+```js
+const response = await axios.get("/api/v3/customers/:id/deposits/summary");
+```
+
+#### Sample Response object:
+
+```json
+{
+  "total_transactions_count": 194,
+  "total_debits_count": 116,
+  "total_debit_amount": 1024412.84,
+  "total_credits_count": 78,
+  "total_credit_amount": 140333.24,
+  "depositors_count": 19,
+  "total_deposit_balance": 4650658.6
+}
+```
+
 ### Sharing a Deposit
 
 There are two ways to share a deposit
 
 - Via Email
-- Via SMS & WhatsApp(WhatsApp is currently unavailable at the moment)
+- Via SMS & WhatsApp
 
 #### Sharing Via Email
 
-To share an Invoice via email, make a `POST` request to the `/deposits/transactions/:id/send-email` endpoint. Here is a sample axios request:
+To share an Invoice via email, make a `POST` request to the `deposits/:id/send-email` endpoint. Here is a sample axios request:
 
 ```js
-const response = await axios.post(
-  "<BASE_URL>/api/deposits/transactions/45397/send-email",
-  {
-    headers: {
-      accept: "application/json",
-      authorization: "Bearer <API-KEY>",
-      "content-type": "application/json",
-    },
-  }
-);
+const response = await axios.post("/api/v3/deposits/:id/send-email", {
+  headers: {
+    accept: "application/json",
+    authorization: "Bearer <API-KEY>",
+    "content-type": "application/json",
+  },
+});
 ```
 
 #### Share via SMS and WhatsApp
 
-To share via SMS, make a post request to the `/deposits/transactions/:id/send-sms` endpoint
+To share via SMS, make a post request to the `/api/v3/deposits/:id/send-whatsapp` endpoint
 
 Query Params of the request
 
 - `wb`: Boolean value representing whether to send deposit via whatsapp
-- `sms`: Boolean value representing whether to send the deposit via SMS
+- `whatsapp`: Boolean value representing whether to send the deposit via SMS
 
 Request payload
 
@@ -255,17 +316,17 @@ Request payload
 
 ### Downloading a deposit
 
-You can download a deposit by visiting this route, `<BASE_URL>/deposit-transactions/receipt/download/:uuid`
+You can download a deposit by visiting this route, `/api/v3/deposits/download`
 
-- `BASE_URL`: This represents the base url of the built server
-- `uuid`: Represents the uuid of the deposit. Can be found in the response object after <a href="#creating-a-deposit">creating a deposit</a>
+- `url`: This represents the base url of the built server
+- `download`: Represents the uuid of the deposit. Can be found in the response object after <a href="#creating-a-deposit">creating a deposit</a>
 
 ### Print a deposit
 
-You can print a deposit by visiting this route, `<BASE_URL>/deposit-transactions/receipt/print/:uuid`
+You can print a deposit by visiting this route, `/api/v3/deposits/print`
 
-- `BASE_URL`: This represents the base url of the built server
-- `uuid`: Represents the uuid of the deposit. Can be found in the response object after <a href="#creating-a-deposit">creating a deposit</a>
+- `url`: This represents the base url of the built server
+- `print`: Represents the uuid of the deposit. Can be found in the response object after <a href="#creating-a-deposit">creating a deposit</a>
 
 ### Depositors
 

@@ -9,7 +9,7 @@ Record quick, straightforward sales with minimal data input.
 To get all quick sales, make a `GET` request to the `/sales` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/sales?page=<pagenumber>");
+const response = await axios.get("/api/v3/sales");
 ```
 
 Where `<pagenumber>` is the page number of the quick sales list
@@ -158,12 +158,10 @@ Where `<pagenumber>` is the page number of the quick sales list
 
 ### Filtering of Quick Sales
 
-To filter quick sales, make a `GET` request to the `/filtersales` endpoint. Sample request using axios:
+To filter quick sales, make a `GET` request to the `/filter-sales` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get(
-  "/api/filtersales/?from=<startdate>&to=<enddate>"
-);
+const response = await axios.get("/api/v3/filter-sales?from&to");
 ```
 
 The `Response` object returned is the same as the one for getting all quick sales
@@ -176,42 +174,46 @@ List of query paramaters:
 ### Creating a Quick Sale
 
 To create a quick, you will need at least a single line item to create the sale.
-Make a `POST` request to `/sale` endpoint to create a sale. Sample request using axios:
+Make a `POST` request to `/sales` endpoint to create a sale. Sample request using axios:
 
 ```js
-const response = await axios.post("<BASE_URL>/api/v2/sale", 
-{
-      "entry_date": "2024-11-12",           // When the sale happened
-      "gross_amount": 500.00,               // The amount before taxes are applied
-      "discount_amount": 50.00,             // The discount applied to the sale
-      "amount_due": 450.00,                 // The amount to be paid by the customer. Value after applying taxes and the discount
-      "tax_amount": 30.00,                  // The tax applied to the sale
-      "items": [                            // A list of items that were purchased during the sale
-        {
-          "item_id": "ITEM-001",
-          "item_name": "Laptop",
-          "quantity": 1,
-          "price": 500.00
-        }
-      ],
-      "note": "Customer preferred express shipping", // A note attached to the sale
-      "tag": "Electronics",                         // A tag attached to the sale
-      "balance/change": 0.00,                       // The balance left after the sale
-      "payments": [                                 // A list of payment accounts and the amount paid into each account
-        {
-          "account_id": "ACC-001",
-          "account_name": "Credit Card",
-          "amount": 450.00
-        }
-      ]
-},
-{
-  headers: {
-    accept: "application/json",
-    authorization: "Bearer <API-KEY>",
-    "content-type": "application/json",
+const response = await axios.post(
+  "/api/v3/sales",
+  {
+    entry_date: "2024-11-12", // When the sale happened
+    gross_amount: 500.0, // The amount before taxes are applied
+    discount_amount: 50.0, // The discount applied to the sale
+    amount_due: 450.0, // The amount to be paid by the customer. Value after applying taxes and the discount
+    tax_amount: 30.0, // The tax applied to the sale
+    items: [
+      // A list of items that were purchased during the sale
+      {
+        item_id: "ITEM-001",
+        item_name: "Laptop",
+        quantity: 1,
+        price: 500.0,
+      },
+    ],
+    note: "Customer preferred express shipping", // A note attached to the sale
+    tag: "Electronics", // A tag attached to the sale
+    "balance/change": 0.0, // The balance left after the sale
+    payments: [
+      // A list of payment accounts and the amount paid into each account
+      {
+        account_id: "ACC-001",
+        account_name: "Credit Card",
+        amount: 450.0,
+      },
+    ],
   },
-});
+  {
+    headers: {
+      accept: "application/json",
+      authorization: "Bearer <API-KEY>",
+      "content-type": "application/json",
+    },
+  }
+);
 ```
 
 Here is an example response received after successfully creating a sale:
@@ -392,26 +394,26 @@ Here is an example response received after successfully creating a sale:
 Sample axios request to get a single quick sale item
 
 ```js
-const response = axios.get("<BASE_URL>/api/sale/:id");
+const response = axios.get("/api/v3/sales/:sale");
 ```
 
-Where `:id` is the id of the sale
+Where `:sale` is the id of the sale
 
 The `Response` object received is same as the response after <a href="#creating-a-quick-sale">Creating a quick sale</a>
 
 ### Update a Quick Sale
 
-To update a sale, make a `POST` request to the `/sale/:id` endpoint. Sample request using axios:
+To update a sale, make a `POST` request to the `/api/v3/sales/:sale` endpoint. Sample request using axios:
 
 Check out <a href="#creating-a-quick-sale">Creating a quick sale</a> to see how to make the request and the shape of the `RESPONSE` object
 
 #### Sharing Via Email
 
-To share a quick sale via email, make a `POST` request to the `/sendreceipt/:id` endpoint. Here is a sample axios request:
+To share a quick sale via email, make a `POST` request to the `/api/v3/sales/:sale/send-receipt` endpoint. Here is a sample axios request:
 
 ```js
 const response = await axios.post(
-  "<BASE_URL>/api/sendreciept/243103",
+  "<BASE_URL>/api/v3/sales/243103",
   {
     "email": "test@gmail.com" //The email address of the recipient
   }
@@ -427,29 +429,29 @@ const response = await axios.post(
 
 ### Printing a quick sale
 
-You can print a quick sale by visiting this route, `<BASE_URL>/printposreceipt/:enc_id`
+You can print a quick sale by visiting this route, `/sales/:sale/print-receipt`
 
-- `BASE_URL`: This represents the base url of the built server
-- `enc_id`: Represents the encryption id of the sale. Can be found in the response object after <a href="#creating-a-quick-sale">creating a quick sale</a>
+- `url`: This represents the base url of the built server
+- `print-receipt`: Represents the encryption id of the sale. Can be found in the response object after <a href="#creating-a-quick-sale">creating a quick sale</a>
 
 ### Downloading a quick sale
 
-You can download a sale by visiting this route, `<BASE_URL>/downloadsalesreceipt/:enc_id`
+You can download a sale by visiting this route, `/sales/:sale/download-receipt}`
 
-- `BASE_URL`: This represents the base url of the built server
-- `enc_id`: Represents the encryption id of the sale. Can be found in the response object after <a href="#creating-a-quick-sale">creating a quick sale</a>
+- `url`: This represents the base url of the built server
+- `download-receipt`: Represents the encryption id of the sale. Can be found in the response object after <a href="#creating-a-quick-sale">creating a quick sale</a>
 
-### Viewing a sale receipt
+### Previewing a sale receipt
 
-You can view a sale receipt by visiting this route, `<BASE_URL>/viewreceipt/:enc_id`
+You can view a sale receipt by visiting this route, `/sales/:sale/preview-receipt`
 
-- `BASE_URL`: This represents the base url of the built server
-- `enc_id`: Represents the encryption id of the sale. Can be found in the response object after <a href="#creating-a-quick-sale">creating a quick sale</a>
+- `url`: This represents the base url of the built server
+- `preview-receipt`: Represents the encryption id of the sale. Can be found in the response object after <a href="#creating-a-quick-sale">creating a quick sale</a>
 
 ### Delete a sale
 
-To delete a sale, make a `DELETE` request to the `/deletesale:id` endpoint. Here is a sample request using axios
+To delete a sale, make a `DELETE` request to the `/api/v3/sales/:sale` endpoint. Here is a sample request using axios
 
 ```js
-const response = await axios.delete("<BASE_URL>/api/deletesale/243103");
+const response = await axios.delete("<BASE_URL>/api/v3/sales/243103");
 ```

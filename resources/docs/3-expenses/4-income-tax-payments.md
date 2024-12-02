@@ -1,19 +1,18 @@
 #meta-data title: Income Tax Payments, description: Record and manage company income tax payments.
+
 ## Income Tax Payments
 
 Income Tax Payments refer to the amounts paid by an individual or business to the government as a portion of their taxable income.
 
-
 ### Get All Income Tax Payments
 
-To get all Income Tax Payments, make a `GET` request to the `/getallaccounts` endpoint. Sample request using axios:
+To get all Income Tax Payments, make a `GET` request to the `/income-tax-payments` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/getallaccounts?page=<pagenumber>");
+const response = await axios.get("/api/v3/income-tax-payments");
 ```
 
 Where `<pagenumber>` is the page number of the income tax payments list
-
 
 #### Sample Response object:
 
@@ -102,9 +101,7 @@ Where `<pagenumber>` is the page number of the income tax payments list
 Sample axios request to get a single income tax payment.
 
 ```js
-const response = axios.get(
-  "https://web.builtaccounting.com/api/incometax/payment/uuid"
-);
+const response = axios.get("/api/v3/income-tax-payments/:id");
 ```
 
 - `:uuid` represents the uuid of the income tax payment you want to get
@@ -114,23 +111,25 @@ The `Response` object received is same as the response after <a href="#creating-
 ### Creating an Income Tax Payment
 
 To create an income tax payment, you will need to enter an amount, select an income tax account and payment account to add a new income tax payment.
-Make a `POST` request to `/incometax/payment` endpoint to add an income tax payment. Sample request using axios:
+Make a `POST` request to `/income-tax-payments` endpoint to add an income tax payment. Sample request using axios:
 
 ```js
 const response = await axios.post(
-  "https://web.builtaccounting.com/api/incometax/payment",
-   {
-    "amount": 150.00,                      // The amount to pay for the sale tax payment
-    "date": "2024-11-30",                   // The date for adding the sale tax payment
-    "description": "Quarterly sales tax payment",  // The description of the income tax payment
-    "tax_account_id": "TAX-001",            // The tax account id
-    "payment_account_id": "PAY-123"         // The payment account id
+  "/api/v3/income-tax-payments",
+  {
+    amount: 150.0, // The amount to pay for the sale tax payment
+    date: "2024-11-30", // The date for adding the sale tax payment
+    description: "Quarterly sales tax payment", // The description of the income tax payment
+    tax_account_id: "TAX-001", // The tax account id
+    payment_account_id: "PAY-123", // The payment account id
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
       "content-type": "application/json",
     },
+  }
 );
 ```
 
@@ -155,24 +154,15 @@ Here is an example response received after successfully adding an income tax pay
 
 ### Update an Income Tax Payment
 
-To update an income tax payment, make a `POST` request to the `/incometax/payment/:id` endpoint.
+To update an income tax payment, make a `POST` request to the `/income-tax-payments/:id` endpoint.
 
 - `:id` represents the id of the income tax paid you want to edit
 
 Check out <a href="#creating-an-income-tax-payment">creating an Income Tax Payment Payment</a> to see how to make the request and the shape of the `RESPONSE` object
 
-
-### Printing an Income Tax Payment
-
-You can print a bill using this visiting this route, `<BASE_URL>/printbill/:enc_id`
-
-- `BASE_URL`: This represents the base url of the built server
-- `end_id`: Represents the encryption id of the invoice. Can be found in the response object after <a href="#creating-a-bill">creating an bill</a>
-
-
 ### Removing an Income Tax Payment
 
-To remove an income tax payment, make a `DELETE` request to the `/incometax/payment/:id`
+To remove an income tax payment, make a `DELETE` request to the `/income-tax-payments/:id`
 
 - `id` - This represents the ID of the income tax payment you want to delete
 

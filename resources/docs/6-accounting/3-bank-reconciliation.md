@@ -9,7 +9,7 @@ Bank Reconciliation is the process of comparing and matching the balances in a c
 To get all Bank Reconciliation, make a `GET` request to the `/business/invited` endpoint. Sample request using axios:
 
 ```js
-const response = await axios.get("/api/v2/business/invited");
+const response = await axios.get("/api/v3/business/invited");
 ```
 
 #### Sample Response object:
@@ -134,11 +134,13 @@ const response = await axios.post(
     "starting_balance": 10000.00,          // The starting balance
     "ending_balance": 8500.00             // The ending balance
   },
-  headers: {
+  {
+    headers: {
       accept: "application/json",
       authorization: "Bearer <API-KEY>",
-      "content-type": "application/json"
+      "content-type": "application/json",
     },
+  }
 );
 ```
 

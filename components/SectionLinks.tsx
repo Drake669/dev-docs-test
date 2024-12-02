@@ -38,7 +38,7 @@ const SectionLinks = ({ title }: { title: string }) => {
       <Button
         variant={"ghost"}
         className={cn(
-          isActive && "bg-secondary",
+          isActive && "bg-sidebar-accent text-sidebar-accent-foreground",
           "w-full flex items-center gap-x-1 font-light text-xs"
         )}
       >
