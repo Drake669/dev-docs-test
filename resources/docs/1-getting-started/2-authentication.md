@@ -24,6 +24,8 @@ To interact with the API, developers must first obtain an access token. Here’s
 Visit the Developer Portal on [Sandbox](https://test.built.africa) or [Production](https://app.built.africa) depending on your current environment to create your account.
 **Please note that for production access, your application will undergo a review process. Sandbox access is unrestricted, but production requires approval to ensure compliance and security.**
 
+![image](/img/dev_account.png)
+
 2. <b>Generate an Access Token</b>
 
 After setting up your account and receiving production approval (if applicable), you can create an access token. Access tokens are scoped to specific businesses rather than individual user accounts, allowing each business to manage its own tokens and permissions independently. Users can create multiple tokens as needed, each associated with their business entity. **Please note that only business owners can create access tokens.**
@@ -32,17 +34,15 @@ After setting up your account and receiving production approval (if applicable),
 
 Navigate to the API Access section of the portal to manage business-specific tokens:
 
-![image](/img/901_1x_shots_so.png)
+![image](/img/access_key.png)
 
 ####
 
 Select the Generate Access Token option to create a new token or manage existing tokens. Each token is uniquely linked to the business it was created for, supporting tailored access and security for various business operations:
 
-![image](/img/901_1x_shots_so.png)
-
 After creating the access token you can copy the token and use it in you project. **Please note that you will only see the code once.**
 
-![image](/img/901_1x_shots_so.png)
+![image](/img/access_key_screen.png)
 
 3. Using the Access Token:
 

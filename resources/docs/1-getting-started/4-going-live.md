@@ -8,7 +8,7 @@ Before going live, ensure that all required steps are completed to securely and 
 
 Start by creating a developer account specifically for the production environment. Go to the [app](https://app.built.africa) then head over to the developer console. Create your account by providing all necessary information for verification. This production account will be distinct from any sandbox or testing accounts to maintain data separation and production-level security.
 
-![image](/img/901_1x_shots_so.png)
+![image](/img/dev_account.png)
 
 2. Wait for Approval
 

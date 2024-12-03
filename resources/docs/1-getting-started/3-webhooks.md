@@ -113,13 +113,13 @@ In this example:
 
 Log in to your developer account and go to the Developer Console where you can manage your webhooks.
 
-![image](/img/901_1x_shots_so.png)
+![image](/img/webhooks.png)
 
 2. Create a Webhook with URL and Channels:
 
 In the Developer Console, Click on the Webhook tab. Here you can create or update your webhook. You can also see how your webhook is performing as well send a test request to ensure it is able to receive requests from our systems.
 
-![image](/img/901_1x_shots_so.png)
+![image](/img/web_config_screen.png)
 
 **_Note: It's recommended to test webhooks in the sandbox environment before going live in production._**
 
