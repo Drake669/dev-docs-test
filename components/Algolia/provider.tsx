@@ -4,7 +4,7 @@ import { FC, PropsWithChildren } from "react";
 import { client } from "./client";
 
 const AlgoliaProvider: FC<PropsWithChildren> = ({ children }) => {
-  const indexName = "docs_index";
+  const indexName = process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME;
   return (
     <InstantSearch searchClient={client} indexName={indexName}>
       {children}

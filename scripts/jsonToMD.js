@@ -145,14 +145,12 @@ const convertJsonToMarkdown = async () => {
   console.log(
     "---------------------------------------------------------Converting json to markdown starting...--------------------------------------------------------"
   );
-  const collectionId = "c33ff3c4-b77b-4462-ac3c-9ded41dbb506";
   let config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: `https://api.getpostman.com/collections/${collectionId}`,
+    url: `https://api.getpostman.com/collections/${process.env.POSTMAN_COLLECTION_ID}`,
     headers: {
-      "X-API-Key":
-        "PMAK-6745c6a7b146ed0001cbf6c4-94be64cf7da8c9fb6b65083a37697cdefd",
+      "X-API-Key": process.env.POSTMAN_API_KEY,
     },
   };
 

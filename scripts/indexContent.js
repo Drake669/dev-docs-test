@@ -1,6 +1,9 @@
 const { searchClient } = require("@algolia/client-search");
 
-const client = searchClient("LSZTDIWNFC", "c4d40b4c5de0d6984f7c6c8f42f8d1eb");
+const client = searchClient(
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID,
+  process.env.NEXT_PUBLIC_ALGOLIA_API_KEY
+);
 
 // // Fetch and index objects in Algolia
 // const processRecords = async () => {
